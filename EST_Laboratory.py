@@ -45,8 +45,6 @@ class EST_Engine:
 
     def _cost_task(self, args):
         curr_bytes, cand_data, beta, eps = args
-        # NOTE: np.frombuffer creates a read-only view, we need a copy for calculations if strictly necessary
-        # but for simple comparison and counts it is fine.
         cand_arr = np.frombuffer(cand_data, dtype=np.uint8).reshape(self.shape)
         curr_arr = np.frombuffer(curr_bytes, dtype=np.uint8).reshape(self.shape)
         
@@ -108,7 +106,7 @@ class ExperimentRunner:
         plt.close()
         return path
 
-def get_user_params(default_size, default_frames):
+def get_user_params(default_size, default_frames, default_sites):
     print("\n--- Manual Configuration Mode ---")
     print(f"(Press ENTER to use defaults)")
     try:
@@ -118,32 +116,38 @@ def get_user_params(default_size, default_frames):
         in_frames = input(f"Duration (Frames) [Default {default_frames}]: ")
         frames = int(in_frames) if in_frames else default_frames
         
+        # --- NEW: INPUT FOR SITES ---
+        in_sites = input(f"Nucleation Sites [Default {default_sites}]: ")
+        sites = int(in_sites) if in_sites else default_sites
+        # ----------------------------
+        
         in_beta = input(f"Beta (Complexity Cost) [Default 3.4]: ")
         beta = float(in_beta) if in_beta else 3.4
         
         in_lam = input(f"Lambda (Temperature) [Default 0.48]: ")
         lam = float(in_lam) if in_lam else 0.48
         
-        return size, frames, beta, lam
+        return size, frames, beta, lam, sites
     except ValueError:
         print("Invalid input. Using Defaults.")
-        return default_size, default_frames, 3.4, 0.482
+        return default_size, default_frames, 3.4, 0.482, default_sites
 
 def Run_Cosmology_Simulation(manual=False):
     runner = ExperimentRunner("Cosmology_Emergence")
     
     # 1. SETUP PARAMETERS
-    SIZE, FRAMES, BETA, LAM = 128, 150, 3.4, 0.482
-    if manual:
-        SIZE, FRAMES, BETA, LAM = get_user_params(SIZE, FRAMES)
+    SIZE, FRAMES, BETA, LAM, SITES = 128, 150, 3.4, 0.482, 12
     
-    runner.log(f"Config: Grid {SIZE}^3 | Frames {FRAMES} | Beta {BETA} | Lambda {LAM}")
+    if manual:
+        SIZE, FRAMES, BETA, LAM, SITES = get_user_params(SIZE, FRAMES, SITES)
+    
+    runner.log(f"Config: Grid {SIZE}^3 | Frames {FRAMES} | Beta {BETA} | Lambda {LAM} | Sites {SITES}")
     
     # 2. INITIALIZE ENGINE
     engine = EST_Engine(size=SIZE, dim=3, candidates=90, beta=BETA, lambda_t=LAM)
     
-    runner.log("Injecting Asynchronous Nucleation Sites...")
-    for _ in range(12):
+    runner.log(f"Injecting {SITES} Nucleation Sites...")
+    for _ in range(SITES):
         c = np.random.randint(20, SIZE-20, size=3)
         rr, cc, dd = np.ogrid[:SIZE, :SIZE, :SIZE]
         dist_sq = (rr - c[0])**2 + (cc - c[1])**2 + (dd - c[2])**2
@@ -157,7 +161,7 @@ def Run_Cosmology_Simulation(manual=False):
         
     runner.log("Simulation Complete. Generating Data...")
     
-    # 4. EXPORT RAW CSV DATA (Moved to Correct Location)
+    # 4. EXPORT RAW CSV DATA
     csv_path = runner.base_dir / "density_data.csv"
     with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
@@ -184,7 +188,7 @@ def Run_Cosmology_Simulation(manual=False):
     plt.axis('off')
     runner.save_plot(f"Deep_Field_Projection_Frame_{FRAMES}.png")
 
-    # 7. GENERATE GIF (Restored)
+    # 7. GENERATE GIF
     try:
         runner.log("Rendering 3D Rotation GIF (Downsampled)...")
         frames = []
