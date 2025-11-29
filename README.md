@@ -35,3 +35,12 @@ pip install numpy matplotlib scipy tqdm imageio
 
 # 3. Run the Laboratory
 python EST_Laboratory.py
+
+
+### 📂 Primary Data (Artifacts)
+This repository hosts the results of a **High-Resolution Run ($256^3$ Grid)** conducted on Nov 29, 2025:
+*   **Duration:** 440 Frames (2.6 Hours computation)
+*   **Resolution:** 16,777,216 nodes
+*   **Results:** 
+    *   `density_evolution.csv`: Raw tracking of baryonic accumulation.
+    *   `Deep_Field_Projection.png`: Filamentary structure visualization.
