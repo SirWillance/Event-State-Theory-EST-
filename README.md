@@ -23,6 +23,16 @@ The `EST_Laboratory` provides four experimental protocols:
 3.  **Phase Space Sweep**: Verification of the "Goldilocks" $\beta / \lambda$ constants at the edge of chaos.
 4.  **Isotropy Check**: Analysis of lattice-based artifacts (System Limitations).
 
+### 🔬 Experimental Modes
+The Unified Engine (`EST_Laboratory.py`) operates in two distinct modalities:
+
+*   **Mode A: Verified Replication (Default)**  
+    Runs the simulation using the precise `λ=0.48`, `β=3.4` constants identified in the phase-space analysis. This reproduces the 12-site Cosmic Web and linear density accumulation documented in Paper 2.
+
+*   **Mode B: The Sandbox (Manual Configuration)**  
+    Allows peer reviewers to manually input Grid Size, Frame Count, and Thermodynamic Constants.  
+    *Purpose:* To enable independent verification of the "Edge of Chaos" boundary (i.e., verifying that modifying `λ` or `β` destroys the structure).
+
 ### 🛠️ Installation & Usage
 Requires **Python 3.8+** and standard scientific libraries.
 
