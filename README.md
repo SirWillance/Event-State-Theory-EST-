@@ -66,3 +66,9 @@ This repository hosts the results of a **High-Resolution Run ($256^3$ Grid)** co
 *   **Results:** 
     *   `density_evolution.csv`: Raw tracking of baryonic accumulation.
     *   `Deep_Field_Projection.png`: Filamentary structure visualization.
+
+### 📊 Experimental Results
+Raw data and visualizations from the high-resolution run are available in the `/artifacts/` directory, including:
+- Density evolution measurements (`density_evolution.csv`)
+- Cosmic web formation evidence (`Deep_Field_Projection.png`) 
+- Phase space analysis (`Phase_Space_Topology.png`)
