@@ -136,6 +136,20 @@ def Run_Cosmology_Simulation(manual=False):
     
     runner.log(f"Config: Grid {SIZE}^3 | Frames {FRAMES} | Beta {BETA} | Lambda {LAM}")
     
+    runner.log("Generating Data...")
+    
+    # --- PATCH: EXPORT RAW CSV DATA ---
+    csv_path = runner.base_dir / "density_data.csv"
+    with open(csv_path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Frame", "Global_Density"])
+        for i, val in enumerate(densities):
+            writer.writerow([i, val])
+    runner.log(f"Saved: {csv_path.name}")
+    # ----------------------------------
+
+    plt.style.use('dark_background')
+    
     engine = EST_Engine(size=SIZE, dim=3, candidates=90, beta=BETA, lambda_t=LAM)
     
     runner.log("Injecting Asynchronous Nucleation Sites...")
