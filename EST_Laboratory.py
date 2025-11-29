@@ -32,6 +32,7 @@ class EST_Engine:
         self.BETA = beta
         self.EPSILON = epsilon
         self.CANDIDATES = candidates
+        # Use defaults or limited threads
         self.executor = ThreadPoolExecutor(max_workers=threads)
         self.seed_physics(777)
         
@@ -78,7 +79,8 @@ class EST_Engine:
         if probs_sum == 0 or np.isnan(probs_sum): return 
         probs /= probs_sum
         
-        self.u = candidates[np.random.choice(len(candidates), p=probs)]
+        idx = np.random.choice(len(candidates), p=probs)
+        self.u = candidates[idx]
         return self.u.mean()
 
 # ==============================================================================
@@ -104,7 +106,7 @@ class ExperimentRunner:
         plt.close()
         return path
 
-def get_user_params(default_size, default_frames):
+def get_user_params(default_size, default_frames, default_sites):
     print("\n--- Manual Configuration Mode ---")
     print(f"(Press ENTER to use defaults)")
     try:
@@ -114,31 +116,52 @@ def get_user_params(default_size, default_frames):
         in_frames = input(f"Duration (Frames) [Default {default_frames}]: ")
         frames = int(in_frames) if in_frames else default_frames
         
+        # --- NEW: INPUT FOR SITES ---
+        in_sites = input(f"Nucleation Sites [Default {default_sites}]: ")
+        sites = int(in_sites) if in_sites else default_sites
+        # ----------------------------
+        
         in_beta = input(f"Beta (Complexity Cost) [Default 3.4]: ")
         beta = float(in_beta) if in_beta else 3.4
         
         in_lam = input(f"Lambda (Temperature) [Default 0.48]: ")
         lam = float(in_lam) if in_lam else 0.48
         
-        return size, frames, beta, lam
+        return size, frames, beta, lam, sites
     except ValueError:
         print("Invalid input. Using Defaults.")
-        return default_size, default_frames, 3.4, 0.482
+        return default_size, default_frames, 3.4, 0.482, default_sites
 
 def Run_Cosmology_Simulation(manual=False):
     runner = ExperimentRunner("Cosmology_Emergence")
     
-    # DEFAULT SETTINGS
-    SIZE, FRAMES, BETA, LAM = 128, 150, 3.4, 0.482
+    # 1. SETUP PARAMETERS
+    SIZE, FRAMES, BETA, LAM, SITES = 128, 150, 3.4, 0.482, 12
     
     if manual:
-        SIZE, FRAMES, BETA, LAM = get_user_params(SIZE, FRAMES)
+        SIZE, FRAMES, BETA, LAM, SITES = get_user_params(SIZE, FRAMES, SITES)
     
-    runner.log(f"Config: Grid {SIZE}^3 | Frames {FRAMES} | Beta {BETA} | Lambda {LAM}")
+    runner.log(f"Config: Grid {SIZE}^3 | Frames {FRAMES} | Beta {BETA} | Lambda {LAM} | Sites {SITES}")
     
-    runner.log("Generating Data...")
+    # 2. INITIALIZE ENGINE
+    engine = EST_Engine(size=SIZE, dim=3, candidates=90, beta=BETA, lambda_t=LAM)
     
-    # --- PATCH: EXPORT RAW CSV DATA ---
+    runner.log(f"Injecting {SITES} Nucleation Sites...")
+    for _ in range(SITES):
+        c = np.random.randint(20, SIZE-20, size=3)
+        rr, cc, dd = np.ogrid[:SIZE, :SIZE, :SIZE]
+        dist_sq = (rr - c[0])**2 + (cc - c[1])**2 + (dd - c[2])**2
+        engine.u[dist_sq < 64] = 1 
+
+    # 3. RUN SIMULATION LOOP
+    densities = []
+    for t in tqdm(range(FRAMES), desc="Simulating Universe"):
+        d = engine.step()
+        densities.append(d)
+        
+    runner.log("Simulation Complete. Generating Data...")
+    
+    # 4. EXPORT RAW CSV DATA
     csv_path = runner.base_dir / "density_data.csv"
     with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
@@ -146,26 +169,8 @@ def Run_Cosmology_Simulation(manual=False):
         for i, val in enumerate(densities):
             writer.writerow([i, val])
     runner.log(f"Saved: {csv_path.name}")
-    # ----------------------------------
 
-    plt.style.use('dark_background')
-    
-    engine = EST_Engine(size=SIZE, dim=3, candidates=90, beta=BETA, lambda_t=LAM)
-    
-    runner.log("Injecting Asynchronous Nucleation Sites...")
-    for _ in range(12):
-        c = np.random.randint(20, SIZE-20, size=3)
-        rr, cc, dd = np.ogrid[:SIZE, :SIZE, :SIZE]
-        dist_sq = (rr - c[0])**2 + (cc - c[1])**2 + (dd - c[2])**2
-        engine.u[dist_sq < 64] = 1 
-
-    densities = []
-    for t in tqdm(range(FRAMES), desc="Simulating Universe"):
-        d = engine.step()
-        densities.append(d)
-        
-    runner.log("Generating Data...")
-    
+    # 5. GENERATE PLOTS
     plt.style.use('dark_background')
     plt.figure(figsize=(10, 5))
     plt.plot(densities, color='cyan', linewidth=2)
@@ -175,6 +180,7 @@ def Run_Cosmology_Simulation(manual=False):
     plt.grid(alpha=0.2)
     runner.save_plot("Baryonic_Accumulation_Graph.png")
     
+    # 6. GENERATE VISUALS (Deep Field)
     projection = engine.u.sum(axis=0)
     plt.figure(figsize=(8, 8))
     plt.imshow(projection, cmap='inferno', interpolation='nearest')
@@ -182,15 +188,13 @@ def Run_Cosmology_Simulation(manual=False):
     plt.axis('off')
     runner.save_plot(f"Deep_Field_Projection_Frame_{FRAMES}.png")
 
-    # --- RESTORING THE 3D GIF MODULE ---
+    # 7. GENERATE GIF
     try:
         runner.log("Rendering 3D Rotation GIF (Downsampled)...")
         frames = []
-        
-        # We only plot points that are MATTER (u=1)
         points = np.argwhere(engine.u)
         
-        # SAFETY LIMIT: Only plot max 5,000 points to save RAM
+        # Limit points for performance
         if len(points) > 5000:
             points = points[np.random.choice(len(points), 5000, replace=False)]
             
@@ -198,19 +202,14 @@ def Run_Cosmology_Simulation(manual=False):
         ax = fig.add_subplot(111, projection='3d')
         ax.set_facecolor('black')
         
-        # Spin loop
         for angle in range(0, 360, 15):
             ax.clear()
-            # Plot the dots
             ax.scatter(points[:,0], points[:,1], points[:,2], c='white', s=0.5, alpha=0.6)
-            
-            # Styling
             ax.set_facecolor('black')
             ax.grid(False)
             ax.axis('off')
             ax.view_init(elev=20, azim=angle)
             
-            # Save frame temporarily
             tmp_path = runner.base_dir / f"temp_{angle}.png"
             plt.savefig(tmp_path, facecolor='black')
             frames.append(imageio.imread(tmp_path))
@@ -221,7 +220,7 @@ def Run_Cosmology_Simulation(manual=False):
         runner.log("GIF Generated.")
         
     except Exception as e:
-        runner.log(f"GIF Gen Failed (System limits): {e}")
+        runner.log(f"GIF Gen Failed: {e}")
 
     runner.log(f"Success. Folder: {runner.base_dir}")
     os.startfile(runner.base_dir)
@@ -232,7 +231,9 @@ def Run_Parameter_Sweep():
     beta_range = np.linspace(2.0, 5.0, 10)
     lambda_range = np.linspace(0.1, 1.0, 10)
     results = np.zeros((10, 10))
+    # We use small grid for sweeping to prevent CPU melt
     SWEEP_SIZE = 32
+    
     pbar = tqdm(total=100)
     
     for i, beta in enumerate(beta_range):
@@ -243,7 +244,8 @@ def Run_Parameter_Sweep():
                   SWEEP_SIZE//2-4:SWEEP_SIZE//2+4] = 1
             final_density = 0
             for _ in range(30):
-                final_density = eng.step() or 0
+                res = eng.step()
+                if res is not None: final_density = res
             results[i, j] = final_density
             pbar.update(1)
     pbar.close()
@@ -259,6 +261,16 @@ def Run_Parameter_Sweep():
     plt.title("The 'Goldilocks Zone' of Existence")
     plt.legend()
     runner.save_plot("Phase_Space_Topology.png")
+    
+    # CSV for Phase Space
+    csv_path = runner.base_dir / "parameter_sweep.csv"
+    with open(csv_path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Beta", "Lambda", "Resulting_Density"])
+        for i, b in enumerate(beta_range):
+            for j, l in enumerate(lambda_range):
+                writer.writerow([b, l, results[i,j]])
+    
     runner.log("Verification Complete.")
     os.startfile(runner.base_dir)
 
@@ -310,7 +322,7 @@ if __name__ == "__main__":
     Independent Researcher: Torben Wille
     EST LABORATORY v2.0 - [Experimental Branch]
     1. Standard Cosmic Emergence (The Default Proof)
-    2. Manual Config Emergence (Exploration Mode) <--- NEW!
+    2. Manual Config Emergence (Exploration Mode)
     3. Parameter Phase Space (The Goldilocks Verification)
     4. Isotropy Check (The Limitations Proof)
     """)
