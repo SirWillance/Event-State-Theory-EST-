@@ -68,7 +68,9 @@ This repository hosts the results of a **High-Resolution Run ($256^3$ Grid)** co
     *   `Deep_Field_Projection.png`: Filamentary structure visualization.
 
 ### 📊 Experimental Results
-Raw data and visualizations from the high-resolution run are available in the `/artifacts/` directory, including:
-- Density evolution measurements (`density_evolution.csv`)
-- Cosmic web formation evidence (`Deep_Field_Projection.png`) 
-- Phase space analysis (`Phase_Space_Topology.png`)
+Raw data and visualizations from the high-resolution run are available in the `/artifacts/` directory:
+- `density_evolution.csv` - Quantitative proof of linear baryon accumulation
+- `Deep_Field_Projection.png` - Visual evidence of cosmic web formation  
+- `Phase_Space_Topology.png` - Empirical discovery of the Goldilocks Zone (λ=0.48, β=3.4)
+
+*These artifacts provide the empirical foundation for the phase transition claims in the associated paper.*
