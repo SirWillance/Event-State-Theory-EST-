@@ -1,6 +1,18 @@
 # Event-State-Theory-EST-
 A Discrete Causal-Information Framework for Cosmology and Fundamental Physics
 
+## 🔬 Scientific Context
+
+This repository contains the computational engine and results for the paper **"Computational Emergence of Cosmic Structure from Algorithmic Probability"** (Wille, 2025). It provides:
+
+- **Empirical validation** of Event-State Theory's prediction of cosmic structure formation
+- **Phase space analysis** revealing critical constants (λ=0.48, β=3.4) at the edge of chaos  
+- **Falsifiable evidence** that can be independently verified by running the code
+
+**Peer reviewers should focus on:**
+- Reproducing the phase transition boundary shown in `fig_heatmap.png`
+- Verifying that deviation from (λ=0.48, β=3.4) destroys cosmic web formation
+- Examining the linear baryon accumulation in `density_evolution.csv`
 
 # Event-State Theory (EST) Computational Engine
 
