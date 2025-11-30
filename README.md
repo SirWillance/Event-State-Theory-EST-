@@ -1,3 +1,4 @@
+```markdown
 # Event-State Theory (EST): A Computational Framework
 *A Discrete Causal-Information Framework for Cosmology and Fundamental Physics*
 
@@ -71,3 +72,10 @@ pip install numpy matplotlib scipy tqdm imageio
 
 # 3. Run the Cosmology Simulation
 python Simulations/EST_Cosmology_Engine.py
+```
+
+## 📬 Contact & Citation
+**Torben Wille**  
+*Independent Systems Researcher*  
+Research artifacts archived on [Zenodo](https://zenodo.org/records/17698703).
+```
