@@ -1,4 +1,3 @@
-```markdown
 # Event-State Theory (EST): A Computational Framework
 *A Discrete Causal-Information Framework for Cosmology and Fundamental Physics*
 
