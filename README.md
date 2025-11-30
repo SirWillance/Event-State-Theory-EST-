@@ -21,8 +21,6 @@ After 48 hours of aggressive falsification attempts requested by peer reviewers,
 | Parameter Cooling           | Early hot phase (λ=0.48) → late-time Ω_b ≈ 0.059 without tuning | PASSED |
 | Goldilocks Zone Width       | Structure emerges over wide β/λ plateau     | PASSED |
 
-→ **Paper 02 v2 – Robustness and Invariance Verification** (Zenodo, Dec 1, 2025)  
-  Link: https://doi.org/10.5281/zenodo.XXXXXXX  *(replace with real DOI after upload)*
 
 → Full reproducible validation suite (code + raw data):  
   [/validation](validation)
@@ -39,6 +37,7 @@ These results eliminate all remaining claims of fine-tuning, magic numbers, or c
 *   **📄 [02_Computational_Proof.pdf](Papers/02_Computational_Proof.pdf)** - Empirical validation via $256^3$ and $512^3$ cellular automaton simulations.
 *   **📄 [03_LHC_Experiment_Proposal.pdf](Papers/03_LHC_Experiment_Proposal.pdf)** - Methodology for detecting Pre-Causal Resonance (PCR) in LHC Minimum Bias data.
 *   **📄 [04_The_Event_State_Protocols.pdf](Papers/04_The_Event_State_Protocols_Monograph.pdf)** - The comprehensive monograph detailing the full axiomatic system.
+*   **📄 [05_Computational_Proof_v2.pdf](Papers/05_Computational_Proof_v2.pdf)** - Robustness and Invariance Verification.
 
 ---
 
