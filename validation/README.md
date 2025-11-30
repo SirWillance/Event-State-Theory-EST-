@@ -13,8 +13,6 @@ This directory contains the complete robustness and invariance proofs for Event-
   - Graph: [nucleation/Nucleation_Scaling_Analysis.png](nucleation/Nucleation_Scaling_Analysis.png)  
   - Raw Data: [nucleation/raw_scaling.csv](nucleation/raw_scaling.csv)
 
-- **Parameter Cooling (Beta/Lambda):** Early hot phase (low density) cools to mature equilibrium (Ω_b ≈0.05).  
-  - Logs/Graphs: [cooling/](cooling/) (add your earlier runs here)
 
 ## How to Reproduce
 1. Install deps: `pip install numpy matplotlib scipy imageio tqdm`  
@@ -22,5 +20,6 @@ This directory contains the complete robustness and invariance proofs for Event-
 3. Outputs in /EST_Output_* folders.
 
 These validations confirm EST's axiomatic strength (see Paper 02 v2 on Zenodo). Questions? Open an issue.
+
 
 — Torben Wille, Dec 1, 2025
