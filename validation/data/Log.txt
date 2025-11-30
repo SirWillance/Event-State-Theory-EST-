@@ -1,0 +1,16 @@
+EST Simulation started
+Frame 1 density 0.04840
+Frame 2 density 0.04852
+Frame 3 density 0.04858
+Frame 4 density 0.04865
+Frame 5 density 0.04871
+Frame 50 density 0.04944
+Frame 100 density 0.04968
+Frame 150 density 0.05029
+Frame 200 density 0.05029
+Frame 250 density 0.05121
+Frame 300 density 0.05170
+Frame 350 density 0.05231
+Frame 400 density 0.05316
+Frame 450 density 0.05389
+Frame 500 density 0.05432

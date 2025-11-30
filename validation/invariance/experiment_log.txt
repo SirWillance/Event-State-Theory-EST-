@@ -1,0 +1,13 @@
+--- EXPERIMENT: Algorithmic_Invariance_Validation ---
+Running with zlib complexity method...
+  zlib: Final density = 0.006718
+Running with lzma complexity method...
+  lzma: Final density = 0.006800
+Running with bzip2 complexity method...
+  bzip2: Final density = 0.007062
+Running with entropy complexity method...
+  entropy: Final density = 0.006773
+Invariance plot saved: C:\Users\Zeratha\Desktop\Farrisvej 9\Tor\Thesis\Theoretical Physiscs\Event-State Theory\Maths\Research Lab\EST_Engine\EST_Output_Algorithmic_Invariance_Validation_20251130_212113\Algorithmic_Invariance_Comparison.png
+Maximum density variance: 0.000344
+Invariance Test: PASS
+Algorithmic Invariance Test Complete.
