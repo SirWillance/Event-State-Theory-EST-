@@ -32,10 +32,6 @@ This directory contains the core documentation for Event-State Theory (EST). The
 **Target:** Computational Physicists & Complexity Theorists.
 **Content:** The theory now withstands every standard falsification attempt. The original results are not only reproduced but strengthened
 
-### 📄 06_Algorithmic_Robustness.pdf
-**Type:** Validation Suite (Event-State Theory III)
-**Target:** Computational Physicists & Complexity Theorists.
-**Content:** The rigorous stress-test of the theory. Demonstrates **Algorithmic Invariance** (proving the Cosmic Web emerges regardless of compression codec: zlib/LZMA/BZIP2) and presents the discovery of **Global Causal Time Collapse**—where time ends not via thermodynamics, but via computational halting.
 
 ---
 
@@ -45,5 +41,6 @@ This directory contains the core documentation for Event-State Theory (EST). The
 The reference Python implementation of the EST Cost Function ($J$) and Asynchronous Multi-Point Crystallization (AMPC). 
 *   **Reproducibility:** Contains the exact scripts used to generate the data for Paper II and III.
 *   **Verification:** Includes the `Isotropy_Check.py` and `Codec_Invariance.py` scripts.
+
 
 
