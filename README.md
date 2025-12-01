@@ -94,10 +94,13 @@ pip install numpy matplotlib scipy tqdm imageio
 python Simulations/EST_Cosmology_Engine.py
 
 # Run the new validation tests (Dec 2025)
-python Simulations/EST_Engine_Enhanced.py
+python validation/code/EST_Engine_Enhanced.py
 # → Menu 5: Algorithmic Invariance | Menu 6: Nucleation Scaling
 
 ```
+
+
+
 
 ## 📬 Contact & Citation
 **Torben Wille**  
