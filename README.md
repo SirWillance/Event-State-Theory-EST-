@@ -29,6 +29,13 @@ These results eliminate all remaining claims of fine-tuning, magic numbers, or c
 
 ---
 
+Note: The laboratory file also contains experimental protocols for
+time-dilation scans and collapse tests which are currently disabled
+in the main menu. These are part of ongoing research and not yet
+covered by the published EST papers.
+
+---
+
 ## 📚 Research Library
 *The complete theoretical and empirical documentation is available in the `/Papers` directory.*
 
