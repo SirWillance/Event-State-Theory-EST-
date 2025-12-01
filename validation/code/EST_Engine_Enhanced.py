@@ -850,9 +850,7 @@ if __name__ == "__main__":
     4. Isotropy Check (The Limitations Proof)
     5. [NEW] Algorithmic Invariance Test (Critical Defense)
     6. [NEW] Nucleation Scaling Test (Robustness Proof)
-    7. [NEW] Time Dilation Scan (Time–Topology Probe) 
-    8. [NEW] Heat Death of the Universe (Information Freeze)
-    9. [EXPERIMENTAL] Global τ-Collapse (No Stable Black Hole Yet)
+
 """)
     c = input("Select Protocol: ")
     if c == "1": Run_Cosmology_Simulation(manual=False)
@@ -861,6 +859,4 @@ if __name__ == "__main__":
     elif c == "4": Run_Relativity_Check()
     elif c == "5": Run_Algorithmic_Invariance_Test()
     elif c == "6": Run_Nucleation_Scaling_Test()
-    elif c == "7": Run_Time_Dilation_Scan()
-    elif c == "8": Run_Heatdeath_Simulation()
-    elif c == "9": Run_Tau_Collapse_Experiment()
+
