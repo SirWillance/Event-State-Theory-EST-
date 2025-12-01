@@ -38,9 +38,13 @@ class EST_Engine:
         self.EPSILON = epsilon
         self.CANDIDATES = candidates
         self.complexity_method = complexity_method
+        # NEW: localized-collapse control
+        self.core_mask = None
+        self.CORE_WEIGHT = 1.0
         # Use defaults or limited threads
         self.executor = ThreadPoolExecutor(max_workers=threads)
         self.seed_physics(777)
+
         
     def seed_physics(self, seed):
         random.seed(seed)
@@ -69,12 +73,25 @@ class EST_Engine:
         cand_arr = np.frombuffer(cand_data, dtype=np.uint8).reshape(self.shape)
         curr_arr = np.frombuffer(curr_bytes, dtype=np.uint8).reshape(self.shape)
         
-        dE = np.sum(curr_arr != cand_arr)
+        flips = (curr_arr != cand_arr)
+        dE = np.sum(flips)
+
+        # --- Localized collapse: penalize flips inside core_mask ---
+        if self.core_mask is not None and self.CORE_WEIGHT != 1.0:
+            # core_mask is a boolean array same shape as u
+            core_flips = np.logical_and(flips, self.core_mask)
+            dE_core = np.sum(core_flips)
+            dE_outer = dE - dE_core
+            dE_eff = dE_outer + self.CORE_WEIGHT * dE_core
+        else:
+            dE_eff = dE
+        # -----------------------------------------------------------
+
         K = self._complexity(cand_data)
-        
         created = np.sum((curr_arr == 0) & (cand_arr == 1))
         destroyed = np.sum((curr_arr == 1) & (cand_arr == 0))
-        return dE + beta * K - eps * (destroyed - created), cand_arr
+        J = dE_eff + beta * K - eps * (destroyed - created)
+        return J, cand_arr
 
     def step(self):
         current_bytes = self.u.tobytes()
@@ -255,6 +272,88 @@ def analyze_cosmic_web_structure(universe_grid):
     # Normalize for grid size
     return min(structure_metric / 10, 1.0)  # Cap at 1.0
 
+def Run_Tau_Collapse_Experiment():
+    """
+    Protocol 9 (Experimental):
+    Attempt to create a localized information-collapse region
+    (black-hole candidate) by making flips inside a central sphere
+    much more expensive than outside, then measuring the τ-field
+    (number of flips per cell) over time.
+
+    NOTE: In current parameter settings this produces a global
+    τ-collapse (universe-wide freeze), not a stable localized
+    black hole. Kept here as an experimental protocol for future tuning.
+    """
+
+    runner = ExperimentRunner("Tau_Collapse_Experiment")
+
+    SIZE   = 128
+    FRAMES = 240
+    R_CORE = 24           # radius of collapsing core
+    CORE_W = 10.0         # cost multiplier for flips inside core
+
+    runner.log(f"Grid={SIZE}^3, FRAMES={FRAMES}, R_CORE={R_CORE}, CORE_WEIGHT={CORE_W}")
+
+    # Use entropy-based complexity to avoid axis bias
+    eng = EST_Engine(size=SIZE, dim=3, lambda_t=0.482, beta=3.4,
+                     epsilon=0.0748, candidates=90, threads=None,
+                     complexity_method='entropy')
+
+    # --- define core mask (central sphere) ---
+    cy = cx = cz = SIZE // 2
+    yy, xx, zz = np.ogrid[:SIZE, :SIZE, :SIZE]
+    dist2 = (yy - cy)**2 + (xx - cx)**2 + (zz - cz)**2
+    core_mask = dist2 < R_CORE**2
+
+    eng.core_mask = core_mask
+    eng.CORE_WEIGHT = CORE_W
+
+    # Fill core with dense "mass"
+    eng.u[core_mask] = 1
+    runner.log("Core region initialised with dense matter.")
+
+    # --- evolve and accumulate τ-field ---
+    tau_field = np.zeros_like(eng.u, dtype=np.int32)
+
+    for t in range(FRAMES):
+        prev = eng.u.copy()
+        eng.step()
+        nxt = eng.u
+        tau_field += (prev != nxt).astype(np.int32)
+
+        if (t+1) % 40 == 0:
+            runner.log(f"Frame {t+1}/{FRAMES}   mean τ so far: {tau_field.mean():.4f}")
+
+    # Save τ volume
+    np.save(runner.base_dir / "tau_field.npy", tau_field)
+    runner.log("Saved tau_field.npy")
+
+    # --- central slices for quick inspection ---
+    mid = SIZE // 2
+    slices = {
+        "Tau_XY_zmid.png": tau_field[:, :, mid],
+        "Tau_XZ_ymid.png": tau_field[mid, :, :],
+        "Tau_YZ_xmid.png": tau_field[:, mid, :],
+    }
+
+    plt.style.use('dark_background')
+    for fname, img in slices.items():
+        plt.figure(figsize=(6,5))
+        plt.imshow(img, cmap="inferno")
+        plt.colorbar(label="Proper-Time Accumulation")
+        plt.title(fname.replace(".png", ""))
+        runner.save_plot(fname)
+        plt.close()
+
+    runner.log("Saved central τ slices (XY/XZ/YZ).")
+    runner.log("Current behaviour: collapse tends to spread globally.")
+    runner.log("Goal (future): dark τ≈0 core, brighter shell (horizon), active exterior.")
+    try:
+        os.startfile(runner.base_dir)
+    except Exception:
+        pass
+
+
 # ==============================================================================
 #   CONTROLLERS (Original Functions Preserved)
 # ==============================================================================
@@ -277,6 +376,32 @@ class ExperimentRunner:
         plt.savefig(path, dpi=300, facecolor='black')
         plt.close()
         return path
+    
+    def save_heatmap(self, array2d, filename):
+        """Save a 2D numpy slice as a heatmap PNG."""
+        plt.style.use('dark_background')
+        plt.figure(figsize=(6, 5))
+        plt.imshow(array2d, cmap="inferno", origin="lower")
+        plt.colorbar(label="Proper-Time Accumulation")
+        plt.title(filename.replace(".png", ""))
+        path = self.base_dir / filename
+        plt.savefig(path, dpi=300, facecolor='black')
+        plt.close()
+        return path
+
+    def save_3d(self, volume, filename):
+        """
+        Minimal placeholder: export a thresholded point cloud as a pseudo-OBJ.
+        This avoids crashes and gives advanced users something to import.
+        """
+        path = self.base_dir / filename
+        thr = np.percentile(volume, 90)  # top 10% activity
+        yy, xx, zz = np.where(volume >= thr)
+        with open(path, "w") as f:
+            for y, x, z in zip(yy, xx, zz):
+                f.write(f"v {x} {y} {z}\n")
+        return path
+
 
 def get_user_params(default_size, default_frames, default_sites):
     print("\n--- Manual Configuration Mode ---")
@@ -477,6 +602,215 @@ def Run_Relativity_Check():
     os.startfile(runner.base_dir)
 
 # ==============================================================================
+#   TIME-TOPOLOGY / PROPER-TIME SCAN  (Protocol 7)
+# ==============================================================================
+
+def _local_flips(prev, nxt, y, x, z, R=2):
+    """Count how many cells changed in a ball of radius R around (y,x,z)."""
+    size = prev.shape[0]
+    y0, y1 = max(0, y-R), min(size, y+R+1)
+    x0, x1 = max(0, x-R), min(size, x+R+1)
+    z0, z1 = max(0, z-R), min(size, z+R+1)
+    sub_prev = prev[y0:y1, x0:x1, z0:z1]
+    sub_nxt  = nxt[y0:y1, x0:x1, z0:z1]
+    return int(np.count_nonzero(sub_prev != sub_nxt))
+
+
+def Run_Time_Dilation_Scan():
+    """
+    Protocol 7:
+    Measure EST 'proper time' along stationary and moving worldlines
+    in an already-structured universe, then compare γ_EST(v) to
+    Minkowski γ(v) as a *reference only*.
+    """
+    runner = ExperimentRunner("Time_Dilation_Scan")
+
+    # ------------------ configuration ------------------
+    SIZE        = 96          # smaller than full 128^3 for speed
+    WARMUP      = 80          # frames to let structure form
+    MEASURE_FR  = 220         # frames for proper-time accumulation
+    RADIUS      = 2           # neighbourhood radius for local flips
+    VELOCITIES  = [0.00, 0.10, 0.20, 0.30, 0.40, 0.50]
+
+    runner.log(f"Config: SIZE={SIZE}, WARMUP={WARMUP}, MEASURE={MEASURE_FR}, R={RADIUS}")
+    runner.log(f"Velocities: {VELOCITIES}")
+
+    # ------------------ 1. warm up a universe ------------------
+    # Use entropy-based complexity here to avoid axis bias
+    eng = EST_Engine(size=SIZE, dim=3, lambda_t=0.482, beta=3.4,
+                     epsilon=0.0748, candidates=90, threads=1,
+                     complexity_method="entropy")
+
+    runner.log("Injecting nucleation sites...")
+    for _ in range(8):
+        c = np.random.randint(12, SIZE-12, size=3)
+        rr, cc, dd = np.ogrid[:SIZE, :SIZE, :SIZE]
+        dist_sq = (rr - c[0])**2 + (cc - c[1])**2 + (dd - c[2])**2
+        eng.u[dist_sq < 36] = 1
+
+    runner.log(f"Warming up for {WARMUP} frames to reach structured state...")
+    for _ in tqdm(range(WARMUP), desc="Warmup"):
+        eng.step()
+
+    # Choose a time-active region: center of mass of matter
+    coords = np.argwhere(eng.u == 1)
+    if len(coords) == 0:
+        runner.log("No active matter found after warmup. Aborting time scan.")
+        return
+    cy, cx, cz = coords.mean(axis=0).astype(int)
+    runner.log(f"Worldline base position (center of mass): y={cy}, x={cx}, z={cz}")
+
+    # Save this warm state so each velocity starts from the same universe
+    base_state = eng.u.copy()
+
+    # ------------------ 2. velocity scan ------------------
+    results = []
+    csv_path = runner.base_dir / "gamma_results.csv"
+    with open(csv_path, "w", newline="") as f_csv:
+        writer = csv.writer(f_csv)
+        writer.writerow(["v", "tau_stationary", "tau_moving", "gamma_EST"])
+
+        for v in VELOCITIES:
+            runner.log(f"\n[SCAN] v = {v:.2f} cells/frame")
+
+            # fresh engine for this velocity, same warm starting state
+            eng_v = EST_Engine(size=SIZE, dim=3, lambda_t=0.482, beta=3.4,
+                               epsilon=0.0748, candidates=90, threads=1,
+                               complexity_method="entropy")
+            eng_v.u = base_state.copy()
+
+            tau_stat = 0.0
+            tau_mov  = 0.0
+
+            for n in tqdm(range(MEASURE_FR), desc=f"v={v:.2f}", leave=False):
+                prev = eng_v.u.copy()
+                eng_v.step()
+                nxt  = eng_v.u
+
+                # stationary worldline
+                tau_stat += _local_flips(prev, nxt, cy, cx, cz, R=RADIUS)
+
+                # moving worldline (wrap in x)
+                x_mov = int(round(cx + v * n)) % SIZE
+                tau_mov  += _local_flips(prev, nxt, cy, x_mov, cz, R=RADIUS)
+
+            gamma_est = math.inf if tau_mov == 0 else (tau_stat / tau_mov)
+            runner.log(f"v={v:.2f}  τ_stat={tau_stat:.1f}  τ_mov={tau_mov:.1f}  γ_EST={gamma_est:.3f}")
+
+            writer.writerow([v, tau_stat, tau_mov, gamma_est])
+            results.append((v, tau_stat, tau_mov, gamma_est))
+
+    runner.log(f"\nSaved gamma_results.csv -> {csv_path.name}")
+
+    # ------------------ 3. plots ------------------
+    v_vals   = [r[0] for r in results]
+    tau_s    = [r[1] for r in results]
+    tau_m    = [r[2] for r in results]
+    gamma_es = [r[3] for r in results]
+
+    plt.style.use('default')
+
+    # Proper time curves
+    plt.figure(figsize=(7,5))
+    plt.plot(v_vals, tau_s, "o-", label="τ_stationary")
+    plt.plot(v_vals, tau_m, "o-", label="τ_moving")
+    plt.title("EST Proper Time Accumulation")
+    plt.xlabel("Velocity (cells/frame)")
+    plt.ylabel("Proper Time τ(v)")
+    plt.grid(True, alpha=0.4)
+    plt.legend()
+    runner.save_plot("tau_plot.png")
+
+    # γ_EST(v)
+    plt.figure(figsize=(7,5))
+    finite_vs = [vv for (vv,gg) in zip(v_vals, gamma_es) if not math.isinf(gg) and gg > 0]
+    finite_gs = [gg for gg in gamma_es if not math.isinf(gg) and gg > 0]
+    if finite_vs:
+        plt.plot(finite_vs, finite_gs, "o-")
+    plt.title("EST Proper-Time Ratio γ(v)")
+    plt.xlabel("Velocity (cells/frame)")
+    plt.ylabel("γ = τ_stationary / τ_moving")
+    plt.grid(True, alpha=0.4)
+    runner.save_plot("gamma_plot.png")
+
+    # Minkowski reference overlay (log scale)
+    plt.figure(figsize=(7,5))
+    mink_v = np.linspace(0.0, max(VELOCITIES)+0.02, 200)
+    mink_g = 1.0 / np.sqrt(1.0 - mink_v**2)
+    plt.plot(mink_v, mink_g, "r--", label="Minkowski γ(v)")
+
+    safe_gamma = [g if (not math.isinf(g) and g < 1e6) else np.nan for g in gamma_es]
+    plt.plot(v_vals, safe_gamma, "bo-", label="EST γ(v)")
+    plt.title("Comparison: EST vs Minkowski Time Dilation (Reference)")
+    plt.xlabel("Velocity")
+    plt.ylabel("γ")
+    plt.yscale("log")
+    plt.grid(True, which="both", alpha=0.4)
+    plt.legend()
+    runner.save_plot("minkowski_comparison.png")
+
+    runner.log("Time Dilation Scan Complete.")
+    os.startfile(runner.base_dir)
+
+# ==============================================================================
+#   BLACK HOLE EMULATION PROTOCOL (Protocol 8)
+#   — Information Collapse → Frozen Time Domain —
+# ==============================================================================
+
+def Run_Heatdeath_Simulation():
+    """
+    Protocol 8:
+    Global heat-death / τ-freeze experiment in a dense-core universe.
+    We seed a massive central region and let standard EST dynamics run,
+    measuring τ(x,y,z) as the total number of state-changes over time.
+    In previous runs this led to near-global τ-collapse (information
+    heat-death), not a stable local black hole.
+    """
+    runner = ExperimentRunner("Heatdeath_Simulation")
+
+    SIZE   = 128
+    FRAMES = 600
+    RADIUS = 32    # radius of initial dense core
+
+    runner.log("Initializing EST Universe for Heatdeath Simulation...")
+    eng = EST_Engine(size=SIZE, dim=3, lambda_t=0.482, beta=3.4,
+                     epsilon=0.0748, candidates=90, threads=1,
+                     complexity_method="entropy")
+                     
+    # ---- Create dense matter core ----
+    cy = cx = cz = SIZE // 2
+    rr, cc, dd = np.ogrid[:SIZE, :SIZE, :SIZE]
+    sphere = (rr - cy)**2 + (cc - cx)**2 + (dd - cz)**2 < RADIUS**2
+    eng.u[sphere] = 1
+    runner.log("Mass core injected — collapse seeded.")
+
+    # ---- Track local time evolution as τ(x,y,z) ----
+    tau_map = np.zeros((SIZE, SIZE, SIZE), dtype=np.int32)
+
+    for t in tqdm(range(FRAMES), desc="Heatdeath Simulation"):
+        prev = eng.u.copy()
+        eng.step()
+        nxt = eng.u
+        tau_map += (prev != nxt).astype(np.int32)
+
+    runner.log("Simulation complete — saving τ-field and slices...")
+    np.save(runner.base_dir / "tau_field.npy", tau_map)
+
+    # central slices
+    runner.save_heatmap(tau_map[:, SIZE//2, :], "TimeMap_Slice_Center.png")
+    runner.save_heatmap(tau_map[cy, :, :],      "TimeMap_Slice_Axial.png")
+    runner.save_3d(tau_map, "TimeMap_3D.obj")   # time-volume export (point cloud OBJ)
+
+    runner.log("\nProtocol 8 finished.")
+    runner.log("Typical behaviour so far: near-global τ-collapse (information freeze).")
+    runner.log("Inspect TimeMap_* and tau_field.npy for the collapse pattern.")
+    try:
+        os.startfile(runner.base_dir)
+    except Exception:
+        pass
+
+
+# ==============================================================================
 #   NEW VALIDATION MENU OPTIONS
 # ==============================================================================
 
@@ -506,16 +840,20 @@ if __name__ == "__main__":
     | |___|___/  | |_____| | (_| | |_) |  
     |_____|___/  |_|     |_|\__,_|_.__/   
                                           
+    
     Event-State Theory - Unified Laboratory [VALIDATION EDITION]
     Independent Researcher: Torben Wille
-    EST LABORATORY v2.1 - [Validation Branch]
+    EST LABORATORY v2.2 - [Validation Branch]
     1. Standard Cosmic Emergence (The Default Proof)
     2. Manual Config Emergence (Exploration Mode)
     3. Parameter Phase Space (The Goldilocks Verification)
     4. Isotropy Check (The Limitations Proof)
     5. [NEW] Algorithmic Invariance Test (Critical Defense)
     6. [NEW] Nucleation Scaling Test (Robustness Proof)
-    """)
+    7. [NEW] Time Dilation Scan (Time–Topology Probe) 
+    8. [NEW] Heat Death of the Universe (Information Freeze)
+    9. [EXPERIMENTAL] Global τ-Collapse (No Stable Black Hole Yet)
+""")
     c = input("Select Protocol: ")
     if c == "1": Run_Cosmology_Simulation(manual=False)
     elif c == "2": Run_Cosmology_Simulation(manual=True)
@@ -523,3 +861,6 @@ if __name__ == "__main__":
     elif c == "4": Run_Relativity_Check()
     elif c == "5": Run_Algorithmic_Invariance_Test()
     elif c == "6": Run_Nucleation_Scaling_Test()
+    elif c == "7": Run_Time_Dilation_Scan()
+    elif c == "8": Run_Heatdeath_Simulation()
+    elif c == "9": Run_Tau_Collapse_Experiment()
