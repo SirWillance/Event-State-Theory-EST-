@@ -7,24 +7,6 @@ This repository hosts the theoretical architecture, computational engines, and e
 
 By minimizing a thermodynamic Cost Function (`J`) based on **Conditional Kolmogorov Complexity**, this framework unifies the macro-scale geometry of Cosmology (Hubble Tension) with the micro-scale mechanics of Quantum Dynamics.
 
-
----
-
-## 🔭 Summary
-
-Event-State Theory posits that the universe is not a continuous manifold, but a **discrete computational process** optimizing a thermodynamic cost:
-
-\[
-J = \alpha \Delta E + \beta K(\psi|\Psi_{n}) - \epsilon
-\]
-
-Time is not fundamental — it is the **rate of successful causal transitions** under the **Path of Computational Least Resistance (PCLR)**.  
-When no lower-cost successor exists:
-
-\[
-\tau \to 0 \quad \Rightarrow \quad \text{Time ends}
-\]
-
 ---
 
 ## Validation Suite – December 1, 2025
