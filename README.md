@@ -99,7 +99,7 @@ python validation/code/EST_Engine_Enhanced.py
 
 ```
 
-Note: The laboratory file also contains experimental protocols for
+Note: The laboratory ( Engine ) file also contains experimental protocols for
 time-dilation scans and collapse tests which are currently disabled
 in the main menu. These are part of ongoing research and not yet
 covered by the published EST papers.
