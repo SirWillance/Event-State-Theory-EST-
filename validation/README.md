@@ -13,19 +13,33 @@ This directory contains the complete robustness and invariance proofs for Event-
   - Graph: [nucleation/Nucleation_Scaling_Analysis.png](nucleation/Nucleation_Scaling_Analysis.png)  
   - Raw Data: [nucleation/raw_scaling.csv](nucleation/raw_scaling.csv)
 
+---
 
 ## How to Reproduce
 1. Install deps: `pip install numpy matplotlib scipy imageio tqdm`  
 2. Run: `python Simulations/EST_Engine_Enhanced.py` → menu 5 or 6.  
 3. Outputs in /EST_Output_* folders.
 
-These validations confirm EST's axiomatic strength (see Paper 02 v2 on Zenodo). Questions? Open an issue.
+These validations confirm EST's axiomatic strength (see Paper 03 on Zenodo). Questions? Open an issue.
 
-Disclaimer:
+---
+
+### Scope of Validation Results
+Current robustness tests apply to cosmological-scale emergence and
+thermodynamic causal dynamics within discrete 3D lattices.
+Quantum-scale PCR dynamics and localized τ-collapse (event horizon formation)
+are scheduled for Phase IV validation and are *not yet claimed as solved*.
+
+---
+
+## Disclaimer:
 This engine is designed for scientific falsification of EST.
 Results are not assumed to be true until independently reproduced.
+
+---
 
 
 
 — Torben Wille, Dec 1, 2025
+
 
