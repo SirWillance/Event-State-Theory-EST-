@@ -40,8 +40,9 @@ This directory contains the core documentation for Event-State Theory (EST). The
 ---
 
 ## 💻 The Simulation Engine
-**Access:** [View Source Code Directory](./Simulatiion/)
+**Access:** [View Source Code Directory](../Simulatiion/)
 
 The reference Python implementation of the EST Cost Function ($J$) and Asynchronous Multi-Point Crystallization (AMPC). 
 *   **Reproducibility:** Contains the exact scripts used to generate the data for Paper II and III.
 *   **Verification:** Includes the `Isotropy_Check.py` and `Codec_Invariance.py` scripts.
+
