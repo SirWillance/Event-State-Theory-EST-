@@ -21,5 +21,11 @@ This directory contains the complete robustness and invariance proofs for Event-
 
 These validations confirm EST's axiomatic strength (see Paper 02 v2 on Zenodo). Questions? Open an issue.
 
+Disclaimer:
+This engine is designed for scientific falsification of EST.
+Results are not assumed to be true until independently reproduced.
+
+
 
 — Torben Wille, Dec 1, 2025
+
