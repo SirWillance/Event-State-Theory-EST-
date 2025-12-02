@@ -1,85 +1,44 @@
+```markdown
 # Event-State Theory (EST): A Computational Framework
 *A Discrete Causal-Information Framework for Cosmology and Fundamental Physics*
 
-## 🔭 Project Overview
+## 🔬 Scientific Context
 
-This repository hosts the theoretical architecture, computational engines, and empirical proofs for **Event-State Theory (EST)**. EST posits that the universe is not a continuous geometric manifold, but a discrete computational optimization process governed by the **Principle of Computational Least Action**.
+This repository contains the computational engine and empirical results for the paper **"Computational Emergence of Cosmic Structure from Algorithmic Probability"** (Wille, 2025). It provides:
 
-By minimizing a thermodynamic Cost Function (`J`) based on **Conditional Kolmogorov Complexity**, this framework unifies the macro-scale geometry of Cosmology (Hubble Tension) with the micro-scale mechanics of Quantum Dynamics.
+- **Empirical validation** of Event-State Theory's prediction of cosmic structure formation.
+- **Phase space analysis** revealing critical constants (**λ=0.48, β=3.4**) at a sharp phase boundary.
+- **Falsifiable evidence** that can be independently verified by running the code or inspecting the raw data.
 
----
-
-## Validation Suite – December 1, 2025
-**All technical objections now formally closed.**
-
-After 48 hours of aggressive falsification attempts requested by peer reviewers, EST has survived every standard robustness test:
-
-| Test                        | Result                                      | Status |
-|-----------------------------|---------------------------------------------|--------|
-| Algorithmic Invariance      | Identical cosmic web across zlib, LZMA, BZIP2, Shannon entropy (variance < 0.00035) | PASSED |
-| Nucleation Scaling          | Linear density & stable web quality across 8–40 sites (5× range) | PASSED |
-| Parameter Cooling           | Early hot phase (λ=0.48) → late-time Ω_b ≈ 0.059 without tuning | PASSED |
-| Goldilocks Zone Width       | Structure emerges over wide β/λ plateau     | PASSED |
-
-
-→ Full reproducible validation suite (code + raw data):  
-  [/validation](validation)
-
-These results eliminate all remaining claims of fine-tuning, magic numbers, or compression artifacts.
+**For Peer Review:** The core claims can be tested by:
+1.  Reproducing the phase transition shown in `/artifacts/01_phase_diagram.png`.
+2.  Verifying that deviation from `(λ=0.48, β=3.4)` destroys cosmic web formation (using Mode B in the engine).
+3.  Examining the linear baryon accumulation in `/artifacts/04_density_evolution_data.csv`.
 
 ---
 
-## 📚 Research Library
-*The complete theoretical and empirical documentation is available in the `/Papers` directory.*
+## 🧪 The EST Computational Engine
 
-*   **📄 [00_Executive_Synthesis.pdf](Papers/00_Executive_Synthesis.pdf)** - *Start Here.* A 2-page summary of the theory, the simulation results, and the predictions.
-*   **📄 [01_Theoretical_Framework.pdf](Papers/01_Theoretical_Framework_v1.pdf)** - The original topological proposal identifying AMPC as the solution to the Hubble Tension.
-*   **📄 [02_Computational_Proof.pdf](Papers/02_Computational_Proof.pdf)** - Empirical validation via $256^3$ and $512^3$ cellular automaton simulations.
-*   **📄 [03_LHC_Experiment_Proposal.pdf](Papers/03_LHC_Experiment_Proposal.pdf)** - Methodology for detecting Pre-Causal Resonance (PCR) in LHC Minimum Bias data.
-*   **📄 [04_The_Event_State_Protocols.pdf](Papers/04_The_Event_State_Protocols_Monograph.pdf)** - The comprehensive monograph detailing the full axiomatic system.
-*   **📄 [05_Computational_Proof_v2.pdf](Papers/05_Computational_Proof_v2.pdf)** - Robustness and Invariance Verification.
+**Research Author:** Torben Wille  
+**Related Papers:** See `/papers/` directory for the complete research triad.
 
----
+### 🌌 Abstract
+The `EST_Laboratory.py` is a discrete 3D cellular automaton that tests the **Event-State Theory** framework. By using a thermodynamic Cost Function (`J`) based on **Conditional Kolmogorov Complexity**, it simulates:
+*   **Asynchronous Multi-Point Crystallization (AMPC)**: Emergence of the cosmic web from void nucleation.
+*   **Linear Baryonic Accumulation**: Validation of the "Scar Tissue" stability mechanism.
+*   **Algorithmic Time Dilation**: The emergent variable frame rate of causal updates.
 
-## 🧪 The Computational Engines
-*Source code located in `/Simulations`*
+### 🔬 Experimental Modes
+The engine operates in two distinct modalities:
 
-### 1. The Cosmology Engine (`EST_Cosmology_Engine.py`)
-A discrete 3D cellular automaton that tests the macro-scale formation of the universe.
-*   **Mechanism:** Asynchronous Multi-Point Crystallization (AMPC).
-*   **Results:**
-    *   Spontaneous emergence of the **Cosmic Web** from random noise.
-    *   **Baryon Asymmetry:** Reproduces $\eta \approx 7 \times 10^{-10}$ (matching Planck 2018) via "Scar Tissue" accumulation.
-    *   **Void Fraction:** ~80-99% depending on nucleation density ($N_0$).
+*   **Mode A: Verified Replication (Default)**
+    Runs the simulation using the precise `λ=0.48`, `β=3.4` constants identified in the phase-space analysis. This reproduces the 12-site Cosmic Web and linear density accumulation documented in the paper.
 
-### 2. The Quantum Engine (`EST_PCR_Proof.py`)
-A relaxation algorithm testing the micro-scale causal dynamics.
-*   **Mechanism:** Global optimization of a 1D timeline under a high-energy constraint.
-*   **Results:**
-    *   Spontaneous generation of **Pre-Causal Resonance (PCR)**.
-    *   Predicts an exponential "vacuum ramp" ($t < 0$) detectable in high-energy collisions.
+*   **Mode B: The Sandbox (Manual Configuration)**
+    Allows for manual input of Grid Size, Frame Count, and Thermodynamic Constants.  
+    *Purpose:* To enable independent verification of the "Edge of Chaos" boundary (i.e., demonstrating that modifying `λ` or `β` destroys the emergent structure).
 
----
-
-## 🔬 Key Empirical Findings
-*The code reproduces observational reality at the "Edge of Chaos" phase boundary (`λ=0.48`, `β=3.4`).*
-
-| Observable | EST Simulation | Observed Reality | Status |
-| :--- | :--- | :--- | :--- |
-| **Cosmic Structure** | Filamentary Web | Filamentary Web | ✅ Match |
-| **Baryon Asymmetry** | $7.07 \times 10^{-10}$ | $6.12 \times 10^{-10}$ | ✅ Match |
-| **Expansion Topology** | Anisotropic | Hubble Tension | ✅ Match |
-| **Vacuum Response** | Exponential Ramp | Ridge Effect (?) | ⏳ Proposed |
-
----
-
-## ⚠️ Limitations & Roadmap
-*   **Grid Bias:** The current prototypes utilize linear compression algorithms (`zlib`) on a fixed Cartesian lattice. This introduces anisotropic artifacts ("Minecraft Physics") in propagation velocity.
-*   **Phase III:** Future work will migrate the kernel to **Dynamic Causal Graphs** to recover full Spherical Special Relativity.
-
----
-
-## 🛠️ Installation & Usage
+### 🛠️ Installation & Usage
 Requires **Python 3.8+** and standard scientific libraries.
 
 ```bash
@@ -90,25 +49,53 @@ cd Event-State-Theory-EST-
 # 2. Install dependencies
 pip install numpy matplotlib scipy tqdm imageio
 
-# 3. Run the Cosmology Simulation
-python Simulations/EST_Cosmology_Engine.py
-
-# Run the new validation tests (Dec 2025)
-python validation/code/EST_Engine_Enhanced.py
-# → Menu 5: Algorithmic Invariance | Menu 6: Nucleation Scaling
-
+# 3. Run the Laboratory
+python EST_Laboratory.py
 ```
-
-Note: The laboratory ( Engine ) file also contains experimental protocols for
-time-dilation scans and collapse tests which are currently disabled
-in the main menu. These are part of ongoing research and not yet
-covered by the published EST papers.
 
 ---
 
+## 📁 Repository Structure
 
-## 📬 Contact & Citation
-**Torben Wille**  
-*Independent Systems Researcher*  
-Research artifacts archived on [Zenodo](https://zenodo.org/records/17698703).
+Event-State-Theory-EST-/
+├── README.md                          # This file
+├── EST_Laboratory.py                  # Main simulation engine
+├── /papers/                           # Formal research documents
+│   ├── README.md                      # Guide to the paper triad
+│   ├── 01_Event-State_Theory.pdf      # The foundational axioms (Spear)
+│   ├── 02_Computational_Emergence.pdf # The empirical proof (Log)
+│   └── 03_The_Event-State_Universe.pdf# The grand synthesis (Verdict)
+├── /artifacts/                        # Raw results & evidence
+│   ├── 01_phase_diagram.png
+│   ├── 02_cosmic_web_snapshot.png
+│   ├── 03_density_evolution_plot.png
+│   ├── 04_density_evolution_data.csv
+│   └── 05_parameter_sweep_data.csv
+└── /validation/                       # For peer reviewers
+    └── VALIDATION_PROTOCOL.md         # Step-by-step verification guide
+
+
+---
+
+## 📊 Empirical Results & Data
+
+The `/artifacts/` directory contains the definitive results from a **High-Resolution Run (256³ Grid)**. This is the empirical foundation of the claims.
+
+*   **Duration:** 440 Frames
+*   **Resolution:** 16,777,216 nodes (16.7 million)
+*   **Contents:**
+    *   `01_phase_diagram.png` - The "Goldilocks Zone": Phase space analysis showing the critical boundary at `(λ=0.48, β=3.4)`.
+    *   `02_cosmic_web_snapshot.png` - EST Deep Field: Visual proof of filamentary structure emergence (Frame 180).
+    *   `03_density_evolution_plot.png` - Baryon Growth: Visualization of the linear "Scar Tissue" accumulation.
+    *   `04_density_evolution_data.csv` - Raw Data: Machine-readable data for the density evolution plot.
+    *   `05_parameter_sweep_data.csv` - Systematic Search: Data from the coarse-grained parameter sweep that identified the critical constants.
+
+*These artifacts provide a complete chain of evidence from systematic parameter discovery to visual and quantitative validation of the theory's predictions.*
+
+---
+
+## 🔍 For Reviewers & Collaborators
+
+Please see the `/validation/` directory for a detailed protocol on independently verifying the results. For questions about the theoretical framework or collaboration on the LHC pre-causal resonance prediction, please contact the author.
+
 ```
