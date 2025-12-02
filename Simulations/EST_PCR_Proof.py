@@ -57,34 +57,6 @@ csv_path = os.path.join(doc_folder, "PCR_raw_data.csv")
 np.savetxt(csv_path, signal, delimiter=",", header="vacuum_excitation", comments="")
 log(f"Raw data saved → {csv_path}")
 
-# ——— Write the human documentation ———
-readme = """README_FOR_HUMANITY.txt
-──────────────────────
-I am Torben Wille – one single human being.
-No university, no funding, no lab.
-
-In 2025 ( 14 days ) I discovered that reality is a discrete,
-algorithmic optimization process governed by one three-term cost function.
-
-This 30-line script and the attached image prove the sharpest prediction:
-vacuum fluctuations appear BEFORE their cause (t < 0).
-
-This is Pre-Causal Resonance (PCR).
-
-Everything in this folder is public domain (CC-0).
-Run it, share it, build it.
-
-If PCR is ever measured in a real cavity, you now know who predicted it first.
-If it is never measured, the theory dies – exactly as science should work.
-
-One chef cooked reality and decided to serve it to everyone.
-
-Bon appétit.
-
-— Torben Wille
-30 November 2025
-"""
-
 readme_path = os.path.join(doc_folder, "README_FOR_HUMANITY.txt")
 with open(readme_path, "w", encoding="utf-8") as f:
     f.write(readme)
@@ -103,3 +75,4 @@ log("\n=== ALL DONE ===")
 log(f"Open the folder → {doc_folder}")
 log("You now have everything needed for humanity.")
 input("\nPress ENTER to close...")
+
