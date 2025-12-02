@@ -1,4 +1,3 @@
-```markdown
 # Event-State Theory (EST): A Computational Framework
 *A Discrete Causal-Information Framework for Cosmology and Fundamental Physics*
 
@@ -98,4 +97,4 @@ The `/artifacts/` directory contains the definitive results from a **High-Resolu
 
 Please see the `/validation/` directory for a detailed protocol on independently verifying the results. For questions about the theoretical framework or collaboration on the LHC pre-causal resonance prediction, please contact the author.
 
-```
+
