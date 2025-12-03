@@ -44,7 +44,8 @@ covered by the published EST papers.
 *   **📄 [02_Computational_Proof.pdf](Papers/02_Computational_Proof.pdf)** - Empirical validation via $256^3$ and $512^3$ cellular automaton simulations.
 *   **📄 [03_LHC_Experiment_Proposal.pdf](Papers/03_LHC_Experiment_Proposal.pdf)** - Methodology for detecting Pre-Causal Resonance (PCR) in LHC Minimum Bias data.
 *   **📄 [04_The_Event_State_Protocols.pdf](Papers/04_The_Event_State_Protocols_Monograph.pdf)** - The comprehensive monograph detailing the full axiomatic system.
-*   **📄 [05_Computational_Proof_v2.pdf](Papers/05_Computational_Proof_v2.pdf)** - Robustness and Invariance Verification.
+*   **📄 [05_Algorithmic_Proof_v2.pdf](Papers/05_Algorithmic_Proof_v2.pdf)** - Robustness and Invariance Verification.
+*   **📄 [06_Computational_Synthesis.pdf](Papers/Computational_Synthesis.pdf)** - Robustness and Invariance Verification.
 
 ---
 
