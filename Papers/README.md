@@ -4,7 +4,9 @@ This directory contains the core documentation for Event-State Theory (EST). The
 
 ### 📄 00_Executive_Synthesis.pdf
 **Type:** Executive Summary (2 Pages)
+
 **Target:** Principal Investigators & Collaborators.
+
 **Content:** A concise overview of the theory, the computational results, and the predictions (LHC/Hubble). **Start here.**
 
 
@@ -60,6 +62,7 @@ F
 The reference Python implementation of the EST Cost Function ($J$) and Asynchronous Multi-Point Crystallization (AMPC). 
 *   **Reproducibility:** Contains the exact scripts used to generate the data for Paper II and III.
 *   **Verification:** Includes the `Isotropy_Check.py` and `Codec_Invariance.py` scripts.
+
 
 
 
