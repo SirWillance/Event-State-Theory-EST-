@@ -272,15 +272,6 @@ def analyze_cosmic_web_structure(universe_grid):
     # Normalize for grid size
     return min(structure_metric / 10, 1.0)  # Cap at 1.0
 
-# ======================================================================
-# EXPERIMENTAL PROTOCOLS (dev only, not exposed in menu)
-# NOTE:
-# - These were used for internal exploration (time dilation, τ-collapse,
-#   black-hole attempts), but are NOT part of the published EST papers.
-# - Use at your own risk; the IF ↔ K mapping is not yet fully formalized.
-# ======================================================================
-
-
 def Run_Tau_Collapse_Experiment():
     """
     Protocol 9 (Experimental):
@@ -464,6 +455,12 @@ def Run_Cosmology_Simulation(manual=False):
         densities.append(d)
         
     runner.log("Simulation Complete. Generating Data...")
+
+    npy_state_path = runner.base_dir / "final_universe_state.npy"
+    npy_dens_path  = runner.base_dir / "density_timeseries.npy"
+    np.save(npy_state_path, engine.u)
+    np.save(npy_dens_path, np.array(densities, dtype=float))
+    runner.log(f"Saved NPY data: {npy_state_path.name}, {npy_dens_path.name}")
     
     # 4. EXPORT RAW CSV DATA
     csv_path = runner.base_dir / "density_data.csv"
@@ -623,14 +620,6 @@ def _local_flips(prev, nxt, y, x, z, R=2):
     sub_prev = prev[y0:y1, x0:x1, z0:z1]
     sub_nxt  = nxt[y0:y1, x0:x1, z0:z1]
     return int(np.count_nonzero(sub_prev != sub_nxt))
-    
-# ======================================================================
-# EXPERIMENTAL PROTOCOLS (dev only, not exposed in menu)
-# NOTE:
-# - These were used for internal exploration (time dilation, τ-collapse,
-#   black-hole attempts), but are NOT part of the published EST papers.
-# - Use at your own risk; the IF ↔ K mapping is not yet fully formalized.
-# ======================================================================
 
 
 def Run_Time_Dilation_Scan():
@@ -772,14 +761,7 @@ def Run_Time_Dilation_Scan():
 # ==============================================================================
 #   BLACK HOLE EMULATION PROTOCOL (Protocol 8)
 #   — Information Collapse → Frozen Time Domain —
-# ======================================================================
-# EXPERIMENTAL PROTOCOLS (dev only, not exposed in menu)
-# NOTE:
-# - These were used for internal exploration (time dilation, τ-collapse,
-#   black-hole attempts), but are NOT part of the published EST papers.
-# - Use at your own risk; the IF ↔ K mapping is not yet fully formalized.
-# ======================================================================
-
+# ==============================================================================
 
 def Run_Heatdeath_Simulation():
     """
@@ -867,7 +849,7 @@ if __name__ == "__main__":
     
     Event-State Theory - Unified Laboratory [VALIDATION EDITION]
     Independent Researcher: Torben Wille
-    EST LABORATORY v2.2 - [Validation Branch]
+    EST LABORATORY v2.3 - [Validation Branch]
     1. Standard Cosmic Emergence (The Default Proof)
     2. Manual Config Emergence (Exploration Mode)
     3. Parameter Phase Space (The Goldilocks Verification)
@@ -883,5 +865,3 @@ if __name__ == "__main__":
     elif c == "4": Run_Relativity_Check()
     elif c == "5": Run_Algorithmic_Invariance_Test()
     elif c == "6": Run_Nucleation_Scaling_Test()
-
-
