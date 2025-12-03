@@ -28,9 +28,26 @@ This directory contains the core documentation for Event-State Theory (EST). The
 **Content:** The complete axiomatic framework, unifying Cosmology, Quantum Mechanics, and Information Theory. Detailed derivations of the Cost Function and Relativity.
 
 ### 📄 05_Algorithmic_Proof_v2.pdf
-**Type:** Predecessor of file 06
+**Type:** Robustness
 **Target:** Computational Physicists & Complexity Theorists.
 **Content:** The theory now withstands every standard falsification attempt. The original results are not only reproduced but strengthened
+
+Type: Grand Synthesis / Unification Paper
+Target: Theoretical Physicists, Cosmologists & Complexity Theorists.
+Content: The unification of Thermodynamics, Geometry, and Causality. Presents the computational proofs for Emergent Gravity (Lensing), Thermodynamic Time (Asymptotic Floor), and the Cosmic Web, establishing the Thermodynamic Correspondence Principle (
+J
+∝
+K
+≈
+1
+/
+I
+F
+J∝K≈1/I 
+F
+​
+ 
+).
 
 
 ---
@@ -41,6 +58,7 @@ This directory contains the core documentation for Event-State Theory (EST). The
 The reference Python implementation of the EST Cost Function ($J$) and Asynchronous Multi-Point Crystallization (AMPC). 
 *   **Reproducibility:** Contains the exact scripts used to generate the data for Paper II and III.
 *   **Verification:** Includes the `Isotropy_Check.py` and `Codec_Invariance.py` scripts.
+
 
 
 
