@@ -1,9 +1,0 @@
---- EXPERIMENT: Cosmology_Emergence ---
-Config: Grid 512^3 | Frames 300 | Beta 3.4 | Lambda 0.48 | Sites 29
-Injecting 29 Nucleation Sites...
-Simulation Complete. Generating Data...
-Saved NPY data: final_universe_state.npy, density_timeseries.npy
-Saved: density_data.csv
-Rendering 3D Rotation GIF (Downsampled)...
-GIF Generated.
-Success. Folder: C:\Users\Zeratha\Desktop\Farrisvej 9\Tor\Thesis\Theoretical Physiscs\Event-State Theory\Codebase\Research Lab\EST_Engine\EST_Output_Cosmology_Emergence_20251203_090357
