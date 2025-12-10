@@ -14,6 +14,7 @@ import random
 import matplotlib.pyplot as plt
 import sys
 import csv
+import json  # NEW: For seed state serialization
 from datetime import datetime
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
@@ -29,7 +30,88 @@ except ImportError:
 import imageio.v2 as imageio
 
 # ==============================================================================
-#   PHYSICAL COSMOLOGICAL SCALER (NEW)
+#   SEED MANAGEMENT SYSTEM (NEW)
+# ==============================================================================
+
+class SeedManager:
+    """Centralized seed management for scientific reproducibility"""
+    
+    def __init__(self, seed=None, store_history=True):
+        """
+        Parameters:
+        - seed: Optional seed value. If None, uses system time.
+        - store_history: Whether to keep history of all seeds used
+        """
+        self.seed_history = [] if store_history else None
+        
+        if seed is None:
+            # Generate seed from system time (microseconds)
+            self.current_seed = int(datetime.now().timestamp() * 1e6) % 2**32
+            self.seed_source = "system_time"
+        else:
+            self.current_seed = int(seed)
+            self.seed_source = "user_provided"
+        
+        # Initialize RNGs
+        self._reset_rngs()
+        
+        if store_history:
+            self.seed_history.append({
+                'seed': self.current_seed,
+                'source': self.seed_source,
+                'timestamp': datetime.now().isoformat()
+            })
+    
+    def _reset_rngs(self):
+        """Reset all RNGs with current seed"""
+        random.seed(self.current_seed)
+        np.random.seed(self.current_seed)
+        # Note: torch/cupy seeds would go here if using those libraries
+    
+    def set_seed(self, seed=None):
+        """Set a new seed, optionally random"""
+        if seed is None:
+            # Generate random seed
+            self.current_seed = random.getrandbits(32)
+            self.seed_source = "random_generated"
+        else:
+            self.current_seed = int(seed)
+            self.seed_source = "user_provided"
+        
+        self._reset_rngs()
+        
+        if self.seed_history is not None:
+            self.seed_history.append({
+                'seed': self.current_seed,
+                'source': self.seed_source,
+                'timestamp': datetime.now().isoformat()
+            })
+    
+    def get_state(self):
+        """Get current RNG states for full reproducibility"""
+        return {
+            'python_random_state': random.getstate(),
+            'numpy_random_state': np.random.get_state(),
+            'seed': self.current_seed,
+            'source': self.seed_source
+        }
+    
+    def save_to_file(self, filename="seed_state.json"):
+        """Save seed state to JSON file"""
+        state = self.get_state()
+        # Convert numpy state to serializable format
+        state['numpy_random_state'] = list(state['numpy_random_state'])
+        state['numpy_random_state'][1] = state['numpy_random_state'][1].tolist()
+        
+        with open(filename, 'w') as f:
+            json.dump(state, f, indent=2)
+        return filename
+    
+    def __str__(self):
+        return f"SeedManager(seed={self.current_seed}, source='{self.seed_source}')"
+
+# ==============================================================================
+#   PHYSICAL COSMOLOGICAL SCALER
 # ==============================================================================
 
 class CosmologicalScaler:
@@ -105,14 +187,16 @@ class CosmologicalScaler:
         }
 
 # ==============================================================================
-#   EST ENGINE (Enhanced with Physical Scaling)
+#   EST ENGINE (Enhanced with Physical Scaling and Seed Management)
 # ==============================================================================
 
 class EST_Engine:
     def __init__(self, size=64, dim=3, lambda_t=0.482, beta=3.4, epsilon=0.0748, 
                  candidates=90, threads=None, complexity_method="zlib",
                  # NEW: Physical scaling parameters
-                 physical_scaling=False, box_size_mpc=500.0, H0=67.4, Ω_m=0.315):
+                 physical_scaling=False, box_size_mpc=500.0, H0=67.4, Ω_m=0.315,
+                 # NEW: Seed management
+                 seed_manager=None, seed=None):
         
         self.size = size
         self.dim = dim
@@ -131,17 +215,32 @@ class EST_Engine:
             self.physical_params = self.scaler.get_physical_scales(size)
             print(f"Physical scaling enabled: {box_size_mpc} Mpc/h box, H0={H0}, Ω_m={Ω_m}")
         
+        # NEW: Seed management
+        if seed_manager is None:
+            # Create new seed manager with provided seed or random
+            self.seed_manager = SeedManager(seed=seed)
+        else:
+            # Use existing seed manager
+            self.seed_manager = seed_manager
+        
+        # Initialize physics with current seed
+        self.seed_physics()
+        
         # Localized-collapse control
         self.core_mask = None
         self.CORE_WEIGHT = 1.0
         
         # Use defaults or limited threads
         self.executor = ThreadPoolExecutor(max_workers=threads)
-        self.seed_physics(777)
+    
+    def seed_physics(self, seed=None):
+        """Seed the physics RNGs. If seed provided, updates seed manager."""
+        if seed is not None:
+            self.seed_manager.set_seed(seed)
         
-    def seed_physics(self, seed):
-        random.seed(seed)
-        np.random.seed(seed)
+        # Get fresh RNG states from seed manager
+        random.seed(self.seed_manager.current_seed)
+        np.random.seed(self.seed_manager.current_seed)
 
     def _complexity(self, arr_bytes):
         if self.complexity_method == "zlib":
@@ -221,15 +320,19 @@ class EST_Engine:
         return self.u.mean()
 
 # ==============================================================================
-#   EXPERIMENT RUNNER WITH PHYSICAL DATA OUTPUT (MODIFIED)
+#   EXPERIMENT RUNNER WITH PHYSICAL DATA OUTPUT AND SEED TRACKING
 # ==============================================================================
 
 class ExperimentRunner:
-    def __init__(self, exp_name, physical_scaling=False, box_size_mpc=500.0, H0=67.4, Ω_m=0.315):
+    def __init__(self, exp_name, physical_scaling=False, box_size_mpc=500.0, 
+                 H0=67.4, Ω_m=0.315, seed=None):
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.base_dir = Path(__file__).parent / f"EST_Output_{exp_name}_{self.timestamp}"
         self.base_dir.mkdir(exist_ok=True)
         self.log_path = self.base_dir / "experiment_log.txt"
+        
+        # NEW: Seed management
+        self.seed_manager = SeedManager(seed=seed)
         
         # NEW: Physical scaling
         self.physical_scaling = physical_scaling
@@ -240,6 +343,14 @@ class ExperimentRunner:
         self.log(f"--- EXPERIMENT: {exp_name} ---")
         if physical_scaling:
             self.log(f"Physical scaling: Box={box_size_mpc} Mpc/h, H0={H0}, Ω_m={Ω_m}")
+        
+        # Log seed information
+        self.log(f"Seed: {self.seed_manager.current_seed} (source: {self.seed_manager.seed_source})")
+        
+        # Save seed state to file
+        seed_file = self.base_dir / "seed_state.json"
+        self.seed_manager.save_to_file(seed_file)
+        self.log(f"Seed state saved to: {seed_file.name}")
 
     def log(self, msg):
         print(msg)
@@ -264,17 +375,38 @@ class ExperimentRunner:
         return path
 
 # ==============================================================================
-#   MODIFIED: Run_Cosmology_Simulation WITH PHYSICAL SCALING
+#   MODIFIED: get_user_params_with_scaling WITH SEED OPTION
 # ==============================================================================
 
 def get_user_params_with_scaling(default_size, default_frames, default_sites):
-    """Get user parameters including physical scaling"""
+    """Get user parameters including physical scaling AND seed control"""
     print("\n--- Manual Configuration Mode ---")
     print(f"(Press ENTER to use defaults)")
     
     try:
-        # Physical scaling first
-        use_scaling = input("Enable physical cosmological scaling? [Y/N, default N]: ").lower()
+        # SEED CONTROL FIRST
+        print("\n--- RANDOM SEED CONTROL ---")
+        seed_choice = input("Seed for random number generation:\n"
+                           "  [Enter] for random (system time)\n"
+                           "  [R] for random but reproducible\n"
+                           "  [Number] for specific seed (e.g., 12345)\n"
+                           "Your choice: ").strip()
+        
+        seed = None
+        if seed_choice.upper() == 'R':
+            # Generate random but fixed seed
+            seed = random.getrandbits(32)
+            print(f"Generated random seed: {seed}")
+        elif seed_choice.isdigit():
+            seed = int(seed_choice)
+            print(f"Using specific seed: {seed}")
+        elif seed_choice == '':
+            print("Using system time as seed (non-reproducible)")
+        else:
+            print(f"Invalid seed choice '{seed_choice}', using system time")
+        
+        # Physical scaling
+        use_scaling = input("\nEnable physical cosmological scaling? [Y/N, default N]: ").lower()
         physical_scaling = use_scaling in ['y', 'yes']
         
         box_size_mpc = 500.0
@@ -313,11 +445,12 @@ def get_user_params_with_scaling(default_size, default_frames, default_sites):
             'physical_scaling': physical_scaling,
             'box_size_mpc': box_size_mpc,
             'H0': H0,
-            'Ω_m': Ω_m
+            'Ω_m': Ω_m,
+            'seed': seed  # NEW: Include seed in params
         }
         
-    except ValueError:
-        print("Invalid input. Using Defaults.")
+    except ValueError as e:
+        print(f"Invalid input: {e}. Using Defaults.")
         return {
             'size': default_size,
             'frames': default_frames,
@@ -327,7 +460,8 @@ def get_user_params_with_scaling(default_size, default_frames, default_sites):
             'physical_scaling': False,
             'box_size_mpc': 500.0,
             'H0': 67.4,
-            'Ω_m': 0.315
+            'Ω_m': 0.315,
+            'seed': None  # Default: no specific seed
         }
 
 def calculate_power_spectrum_physical(universe_grid, scaler):
@@ -395,8 +529,12 @@ def calculate_power_spectrum_physical(universe_grid, scaler):
         'n_s': n_s
     }
 
+# ==============================================================================
+#   MODIFIED: Run_Cosmology_Simulation WITH SEED PROPAGATION
+# ==============================================================================
+
 def Run_Cosmology_Simulation(manual=False):
-    """MAIN FUNCTION: Run EST simulation with physical scaling option"""
+    """MAIN FUNCTION: Run EST simulation with physical scaling AND seed control"""
     
     # Get parameters
     if manual:
@@ -408,25 +546,27 @@ def Run_Cosmology_Simulation(manual=False):
             'beta': 3.4,
             'lam': 0.482,
             'sites': 12,
-            'physical_scaling': True,  # Default to True for auto-run
+            'physical_scaling': True,
             'box_size_mpc': 500.0,
             'H0': 67.4,
-            'Ω_m': 0.315
+            'Ω_m': 0.315,
+            'seed': None  # Auto-run uses system time
         }
     
-    # Create experiment runner with physical scaling
+    # Create experiment runner WITH SEED
     runner = ExperimentRunner(
         "Cosmology_Emergence_Physical" if params['physical_scaling'] else "Cosmology_Emergence",
         physical_scaling=params['physical_scaling'],
         box_size_mpc=params['box_size_mpc'],
         H0=params['H0'],
-        Ω_m=params['Ω_m']
+        Ω_m=params['Ω_m'],
+        seed=params['seed']  # NEW: Pass seed to runner
     )
     
     runner.log(f"Config: Grid {params['size']}^3 | Frames {params['frames']}")
     runner.log(f"Beta {params['beta']} | Lambda {params['lam']} | Sites {params['sites']}")
     
-    # Initialize engine with physical scaling
+    # Initialize engine with physical scaling AND seed manager from runner
     engine = EST_Engine(
         size=params['size'],
         dim=3,
@@ -436,10 +576,11 @@ def Run_Cosmology_Simulation(manual=False):
         physical_scaling=params['physical_scaling'],
         box_size_mpc=params['box_size_mpc'],
         H0=params['H0'],
-        Ω_m=params['Ω_m']
+        Ω_m=params['Ω_m'],
+        seed_manager=runner.seed_manager  # NEW: Share seed manager
     )
     
-    # Inject nucleation sites
+    # Inject nucleation sites (now using controlled RNG)
     runner.log(f"Injecting {params['sites']} Nucleation Sites...")
     for _ in range(params['sites']):
         c = np.random.randint(20, params['size']-20, size=3)
@@ -507,6 +648,8 @@ def Run_Cosmology_Simulation(manual=False):
         f.write(f"Lambda: {params['lam']}\n")
         f.write(f"Nucleation sites: {params['sites']}\n")
         f.write(f"Epsilon: 0.0748\n")
+        f.write(f"Random seed: {runner.seed_manager.current_seed}\n")
+        f.write(f"Seed source: {runner.seed_manager.seed_source}\n")
         
         if params['physical_scaling']:
             f.write(f"\n--- PHYSICAL SCALING ---\n")
@@ -640,7 +783,9 @@ def Run_Cosmology_Simulation(manual=False):
         f.write(f"  Frames: {params['frames']}\n")
         f.write(f"  Beta (β): {params['beta']}\n")
         f.write(f"  Lambda (λ): {params['lam']}\n")
-        f.write(f"  Nucleation sites: {params['sites']}\n\n")
+        f.write(f"  Nucleation sites: {params['sites']}\n")
+        f.write(f"  Random seed: {runner.seed_manager.current_seed}\n")
+        f.write(f"  Seed source: {runner.seed_manager.seed_source}\n\n")
         
         f.write("RESULTS:\n")
         if densities:
@@ -688,8 +833,10 @@ def Run_Cosmology_Simulation(manual=False):
 
 def Run_Parameter_Sweep_Simple():
     """Simple parameter sweep like original (for comparison)"""
-    runner = ExperimentRunner("Parameter_Sweep_Simple")
-    print("Calculating the Goldilocks Zone (3-5 mins)...")
+    # Use random seed for sweep
+    seed = random.getrandbits(32)
+    runner = ExperimentRunner("Parameter_Sweep_Simple", seed=seed)
+    print(f"Calculating the Goldilocks Zone (seed: {seed})...")
     beta_range = np.linspace(2.0, 5.0, 10)
     lambda_range = np.linspace(0.1, 1.0, 10)
     results = np.zeros((10, 10))
@@ -707,7 +854,8 @@ def Run_Parameter_Sweep_Simple():
                 lambda_t=lam, 
                 beta=beta, 
                 threads=1,
-                physical_scaling=False  # Simple test
+                physical_scaling=False,  # Simple test
+                seed_manager=runner.seed_manager  # Share seed manager
             )
             
             eng.u[SWEEP_SIZE//2-4:SWEEP_SIZE//2+4, 
@@ -734,7 +882,7 @@ def Run_Parameter_Sweep_Simple():
     plt.scatter([0.482], [3.4], color='white', marker='x', s=100, label='EST Settings')
     plt.xlabel("Causal Temperature (Lambda)")
     plt.ylabel("Complexity Cost (Beta)")
-    plt.title("The 'Goldilocks Zone' of Existence")
+    plt.title(f"The 'Goldilocks Zone' of Existence\nSeed: {seed}")
     plt.legend()
     runner.save_plot("Phase_Space_Topology.png")
     
@@ -742,19 +890,21 @@ def Run_Parameter_Sweep_Simple():
     csv_path = runner.base_dir / "parameter_sweep.csv"
     with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Beta", "Lambda", "Resulting_Density"])
+        writer.writerow(["Beta", "Lambda", "Resulting_Density", "Seed"])
         for i, b in enumerate(beta_range):
             for j, l in enumerate(lambda_range):
-                writer.writerow([b, l, results[i,j]])
+                writer.writerow([b, l, results[i,j], seed])
     
     runner.log("Verification Complete.")
     os.startfile(runner.base_dir)    
 
 def Run_Enhanced_Parameter_Sweep():
     """Enhanced Goldilocks Zone analysis across ALL complexity methods"""
-    runner = ExperimentRunner("Enhanced_Goldilocks_Analysis")
+    # Use random seed
+    seed = random.getrandbits(32)
+    runner = ExperimentRunner("Enhanced_Goldilocks_Analysis", seed=seed)
     
-    print("Calculating Goldilocks Zones for ALL complexity methods...")
+    print(f"Calculating Goldilocks Zones for ALL complexity methods (seed: {seed})...")
     
     # Test all complexity methods
     methods = ["zlib", "lzma", "bzip2", "entropy"]
@@ -782,7 +932,8 @@ def Run_Enhanced_Parameter_Sweep():
                     lambda_t=lam, 
                     beta=beta, 
                     threads=1,
-                    complexity_method=method  # Use current method
+                    complexity_method=method,  # Use current method
+                    seed_manager=runner.seed_manager  # Share seed manager
                 )
                 
                 # Standard seed pattern
@@ -807,10 +958,10 @@ def Run_Enhanced_Parameter_Sweep():
         csv_path = runner.base_dir / f"parameter_sweep_{method}.csv"
         with open(csv_path, "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["Beta", "Lambda", "Resulting_Density"])
+            writer.writerow(["Beta", "Lambda", "Resulting_Density", "Seed"])
             for i, b in enumerate(beta_range):
                 for j, l in enumerate(lambda_range):
-                    writer.writerow([b, l, results[i, j]])
+                    writer.writerow([b, l, results[i, j], seed])
     
     # ============================================
     # CREATE COMPREHENSIVE COMPARISON PLOTS
@@ -833,7 +984,7 @@ def Run_Enhanced_Parameter_Sweep():
         
         plt.xlabel("Causal Temperature (Lambda)")
         plt.ylabel("Complexity Cost (Beta)")
-        plt.title(f"Goldilocks Zone - {method.capitalize()} Complexity")
+        plt.title(f"Goldilocks Zone - {method.capitalize()} Complexity\nSeed: {seed}")
         plt.legend()
         plt.tight_layout()
         
@@ -858,7 +1009,7 @@ def Run_Enhanced_Parameter_Sweep():
         # Add colorbar
         plt.colorbar(im, ax=ax, label="Density")
     
-    plt.suptitle("Goldilocks Zone Comparison: All Complexity Methods", fontsize=16)
+    plt.suptitle(f"Goldilocks Zone Comparison: All Complexity Methods\nSeed: {seed}", fontsize=16)
     plt.tight_layout()
     runner.save_plot("Goldilocks_Comparison_All_Methods.png")
     
@@ -882,7 +1033,7 @@ def Run_Enhanced_Parameter_Sweep():
     plt.colorbar(im, label="Variance between methods")
     plt.xlabel("Causal Temperature (Lambda)")
     plt.ylabel("Complexity Cost (Beta)")
-    plt.title("Method Variance: Higher = More Sensitivity to Complexity Definition")
+    plt.title(f"Method Variance: Higher = More Sensitivity to Complexity Definition\nSeed: {seed}")
     
     # Highlight high-variance zones
     high_var_mask = variance_grid > np.percentile(variance_grid, 75)
@@ -929,13 +1080,14 @@ def Run_Enhanced_Parameter_Sweep():
         ax.legend()
         ax.grid(alpha=0.3)
     
-    plt.suptitle("Complexity Method Correlation Analysis", fontsize=14)
+    plt.suptitle(f"Complexity Method Correlation Analysis\nSeed: {seed}", fontsize=14)
     plt.tight_layout()
     runner.save_plot("Complexity_Method_Correlation.png")
     
     # 5. SUMMARY STATISTICS
     runner.log("\n" + "="*60)
     runner.log("GOLDILOCKS ZONE ANALYSIS - SUMMARY")
+    runner.log(f"Seed: {seed}")
     runner.log("="*60)
     
     # Find optimal zones for each method
@@ -973,21 +1125,23 @@ def Run_Enhanced_Parameter_Sweep():
     optimal_csv = runner.base_dir / "optimal_parameters_summary.csv"
     with open(optimal_csv, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Method", "Optimal_Beta", "Optimal_Lambda", "Max_Density"])
+        writer.writerow(["Method", "Optimal_Beta", "Optimal_Lambda", "Max_Density", "Seed"])
         for method, data in optimal_params.items():
-            writer.writerow([method, data['beta'], data['lambda'], data['density']])
+            writer.writerow([method, data['beta'], data['lambda'], data['density'], seed])
     
     runner.log(f"\nAnalysis complete. Data saved to: {runner.base_dir}")
     os.startfile(runner.base_dir)
 
 # ==============================================================================
-#   VALIDATION TEST SUITE (MISSING FROM v2.7)
+#   VALIDATION TEST SUITE
 # ==============================================================================
 
 def test_algorithmic_invariance(runner=None):
     """Test if cosmic web emerges regardless of complexity algorithm"""
     if runner is None:
-        runner = ExperimentRunner("Algorithmic_Invariance")
+        # Use random seed
+        seed = random.getrandbits(32)
+        runner = ExperimentRunner("Algorithmic_Invariance", seed=seed)
     
     print("Testing Algorithmic Invariance...")
     methods = ["zlib", "lzma", "bzip2", "entropy"]
@@ -997,7 +1151,8 @@ def test_algorithmic_invariance(runner=None):
         runner.log(f"Running with {method} complexity method...")
         engine = EST_Engine(size=48, complexity_method=method, 
                           beta=3.4, lambda_t=0.48, threads=1,
-                          physical_scaling=False)  # Disable for pure test
+                          physical_scaling=False,  # Disable for pure test
+                          seed_manager=runner.seed_manager)  # Share seed manager
         
         # Standard nucleation pattern
         engine.u[20:28, 20:28, 20:28] = 1
@@ -1021,7 +1176,7 @@ def test_algorithmic_invariance(runner=None):
     for method, data in results.items():
         plt.plot(data['all_densities'], label=method, linewidth=2)
     
-    plt.title("Algorithmic Invariance Test\nCosmic Web Emergence Across Different Complexity Measures")
+    plt.title(f"Algorithmic Invariance Test\nCosmic Web Emergence Across Different Complexity Measures\nSeed: {runner.seed_manager.current_seed}")
     plt.xlabel("Frames")
     plt.ylabel("Global Density")
     plt.legend()
@@ -1062,7 +1217,9 @@ def analyze_cosmic_web_structure(universe_grid):
 def run_nucleation_scaling_test(runner=None):
     """Test cosmic web formation across different nucleation site counts"""
     if runner is None:
-        runner = ExperimentRunner("Nucleation_Scaling")
+        # Use random seed
+        seed = random.getrandbits(32)
+        runner = ExperimentRunner("Nucleation_Scaling", seed=seed)
     
     site_counts = [8, 12, 16, 20, 24, 29, 32, 36, 40]
     results = {}
@@ -1072,7 +1229,8 @@ def run_nucleation_scaling_test(runner=None):
     for sites in site_counts:
         runner.log(f"Testing {sites} nucleation sites...")
         engine = EST_Engine(size=64, beta=3.4, lambda_t=0.48, threads=1,
-                          physical_scaling=False)  # Disable for test
+                          physical_scaling=False,  # Disable for test
+                          seed_manager=runner.seed_manager)  # Share seed manager
         
         # Inject specified number of sites
         for _ in range(sites):
@@ -1113,13 +1271,13 @@ def run_nucleation_scaling_test(runner=None):
     ax1.plot(sites_list, densities, 'o-', color='cyan', linewidth=2, markersize=6)
     ax1.set_xlabel("Number of Nucleation Sites")
     ax1.set_ylabel("Final Global Density")
-    ax1.set_title("Density vs Nucleation Sites")
+    ax1.set_title(f"Density vs Nucleation Sites\nSeed: {runner.seed_manager.current_seed}")
     ax1.grid(alpha=0.3)
     
     ax2.plot(sites_list, structures, 'o-', color='magenta', linewidth=2, markersize=6)
     ax2.set_xlabel("Number of Nucleation Sites")
     ax2.set_ylabel("Structure Quality Metric")
-    ax2.set_title("Cosmic Web Structure vs Nucleation Sites")
+    ax2.set_title(f"Cosmic Web Structure vs Nucleation Sites\nSeed: {runner.seed_manager.current_seed}")
     ax2.grid(alpha=0.3)
     
     plt.tight_layout()
@@ -1133,18 +1291,19 @@ def run_nucleation_scaling_test(runner=None):
     
     return results
 
-
 # ==============================================================================
-#   NEW VALIDATION MENU OPTIONS (ADD TO v2.7)
+#   NEW VALIDATION MENU OPTIONS
 # ==============================================================================
-
 
 def Run_Relativity_Check():
-    runner = ExperimentRunner("Isotropy_Verification")
+    """Check for isotropy/lattice bias"""
+    # Use random seed
+    seed = random.getrandbits(32)
+    runner = ExperimentRunner("Isotropy_Verification", seed=seed)
     SIZE, FRAMES = 96, 80
     
     def run_axis(axis_idx):
-        eng = EST_Engine(size=SIZE, dim=3)
+        eng = EST_Engine(size=SIZE, dim=3, seed_manager=runner.seed_manager)
         c = SIZE // 2
         if axis_idx == 0: eng.u[c, c-5:c+5, c-5:c+5] = 1 
         if axis_idx == 1: eng.u[c-5:c+5, c, c-5:c+5] = 1 
@@ -1166,30 +1325,36 @@ def Run_Relativity_Check():
     plt.plot(pX, color="red", label="X-Axis (Grid Jump)")
     plt.plot(pY, color="green", label="Y-Axis (Grid Jump)")
     plt.plot(pZ, color="blue", label="Z-Axis (Memory Linear)")
-    plt.title("Isotropy Failure: Lattice Bias")
+    plt.title(f"Isotropy Failure: Lattice Bias\nSeed: {seed}")
     plt.legend()
     runner.save_plot("Isotropy_Proof_Graph.png")
     os.startfile(runner.base_dir)
 
 def Run_Algorithmic_Invariance_Test():
     """New menu option for algorithmic invariance validation"""
-    runner = ExperimentRunner("Algorithmic_Invariance_Validation")
+    # Use random seed
+    seed = random.getrandbits(32)
+    runner = ExperimentRunner("Algorithmic_Invariance_Validation", seed=seed)
     results = test_algorithmic_invariance(runner)
     runner.log("Algorithmic Invariance Test Complete.")
     os.startfile(runner.base_dir)
 
 def Run_Nucleation_Scaling_Test():
     """New menu option for nucleation scaling validation"""
-    runner = ExperimentRunner("Nucleation_Scaling_Validation")
+    # Use random seed
+    seed = random.getrandbits(32)
+    runner = ExperimentRunner("Nucleation_Scaling_Validation", seed=seed)
     results = run_nucleation_scaling_test(runner)
     runner.log("Nucleation Scaling Test Complete.")
     os.startfile(runner.base_dir)
 
 def Run_Physical_Invariance_Test():
-    """NEW: Test invariance with PHYSICAL SCALING enabled"""
-    runner = ExperimentRunner("Physical_Invariance_Test")
+    """Test invariance with PHYSICAL SCALING enabled"""
+    # Use random seed
+    seed = random.getrandbits(32)
+    runner = ExperimentRunner("Physical_Invariance_Test", seed=seed)
     
-    print("Testing Algorithmic Invariance WITH PHYSICAL SCALING...")
+    print(f"Testing Algorithmic Invariance WITH PHYSICAL SCALING (Seed: {seed})...")
     methods = ["zlib", "lzma", "bzip2", "entropy"]
     results = {}
     
@@ -1206,7 +1371,8 @@ def Run_Physical_Invariance_Test():
             physical_scaling=True,  # ENABLED!
             box_size_mpc=500.0,
             H0=67.4,
-            Ω_m=0.315
+            Ω_m=0.315,
+            seed_manager=runner.seed_manager  # Share seed manager
         )
         
         # Standard nucleation pattern
@@ -1251,13 +1417,13 @@ def Run_Physical_Invariance_Test():
         if data['all_densities_phys']:
             ax2.plot(data['all_densities_phys'], label=method, linewidth=2)
     
-    ax1.set_title("Algorithmic Invariance (Simulation Units)")
+    ax1.set_title(f"Algorithmic Invariance (Simulation Units)\nSeed: {seed}")
     ax1.set_xlabel("Frames")
     ax1.set_ylabel("Global Density (sim)")
     ax1.legend()
     ax1.grid(alpha=0.3)
     
-    ax2.set_title("Algorithmic Invariance (Physical Units)")
+    ax2.set_title(f"Algorithmic Invariance (Physical Units)\nSeed: {seed}")
     ax2.set_xlabel("Frames")
     ax2.set_ylabel("Ω_m (physical)")
     ax2.legend()
@@ -1284,7 +1450,7 @@ def Run_Physical_Invariance_Test():
     csv_path = runner.base_dir / "physical_invariance_results.csv"
     with open(csv_path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Method", "Final_Density_Sim", "Final_Ω_m", "Variance_From_Mean_Ω_m"])
+        writer.writerow(["Method", "Final_Density_Sim", "Final_Ω_m", "Variance_From_Mean_Ω_m", "Seed"])
         
         mean_Ω_m = np.mean(final_densities_phys)
         for method, data in results.items():
@@ -1293,7 +1459,8 @@ def Run_Physical_Invariance_Test():
                 method, 
                 f"{data['final_density_sim']:.6f}", 
                 f"{data['final_density_phys']:.6f}",
-                f"{variance_from_mean:.6f}"
+                f"{variance_from_mean:.6f}",
+                seed
             ])
     
     runner.log(f"\nDetailed results saved to: {csv_path.name}")
@@ -1301,7 +1468,131 @@ def Run_Physical_Invariance_Test():
     os.startfile(runner.base_dir)
 
 # ==============================================================================
-#   MAIN MENU (Updated for v2.7 with ALL validation tests)
+#   NEW: SEED UTILITY FUNCTIONS
+# ==============================================================================
+
+def reproduce_experiment(seed_state_file):
+    """Reproduce an experiment from saved seed state"""
+    import json
+    
+    print(f"\nAttempting to reproduce experiment from: {seed_state_file}")
+    
+    with open(seed_state_file, 'r') as f:
+        state = json.load(f)
+    
+    seed = state['seed']
+    
+    print(f"Original seed: {seed}")
+    print(f"Source: {state.get('source', 'unknown')}")
+    
+    # Create new seed manager with the saved seed
+    seed_manager = SeedManager(seed=seed, store_history=False)
+    
+    # Set the exact RNG states if available
+    if 'python_random_state' in state:
+        random.setstate(tuple(state['python_random_state']))
+    
+    if 'numpy_random_state' in state:
+        # Convert back to numpy state format
+        numpy_state = tuple(state['numpy_random_state'])
+        numpy_state = (numpy_state[0], np.array(numpy_state[1]), numpy_state[2], numpy_state[3], numpy_state[4])
+        np.random.set_state(numpy_state)
+    
+    print("RNG states restored. Experiment should be reproducible.")
+    return seed_manager
+
+def batch_experiments_with_seeds(seed_list, config_template):
+    """Run batch experiments with different seeds"""
+    results = []
+    
+    for i, seed in enumerate(seed_list):
+        print(f"\n=== Experiment {i+1}/{len(seed_list)} with seed {seed} ===")
+        
+        # Create experiment with specific seed
+        runner = ExperimentRunner(
+            f"Batch_Run_Seed_{seed}",
+            physical_scaling=config_template.get('physical_scaling', False),
+            box_size_mpc=config_template.get('box_size_mpc', 500.0),
+            H0=config_template.get('H0', 67.4),
+            Ω_m=config_template.get('Ω_m', 0.315),
+            seed=seed
+        )
+        
+        # Create engine with runner's seed manager
+        engine = EST_Engine(
+            size=config_template.get('size', 128),
+            dim=3,
+            candidates=90,
+            beta=config_template.get('beta', 3.4),
+            lambda_t=config_template.get('lam', 0.482),
+            seed_manager=runner.seed_manager
+        )
+        
+        # Inject nucleation sites
+        sites = config_template.get('sites', 8)
+        for _ in range(sites):
+            c = np.random.randint(20, config_template.get('size', 128)-20, size=3)
+            rr, cc, dd = np.ogrid[:config_template.get('size', 128), 
+                                  :config_template.get('size', 128), 
+                                  :config_template.get('size', 128)]
+            dist_sq = (rr - c[0])**2 + (cc - c[1])**2 + (dd - c[2])**2
+            engine.u[dist_sq < 64] = 1
+        
+        # Run simulation
+        densities = []
+        for t in tqdm(range(config_template.get('frames', 100)), desc=f"Seed {seed}"):
+            d = engine.step()
+            if d is not None:
+                densities.append(d)
+        
+        # Store results
+        results.append({
+            'seed': seed,
+            'final_density': densities[-1] if densities else 0,
+            'all_densities': densities,
+            'runner': runner
+        })
+    
+    # Analyze variance across seeds
+    final_densities = [r['final_density'] for r in results]
+    mean_density = np.mean(final_densities)
+    std_density = np.std(final_densities)
+    
+    print(f"\n=== BATCH ANALYSIS ===")
+    print(f"Number of experiments: {len(seed_list)}")
+    print(f"Mean final density: {mean_density:.6f}")
+    print(f"Standard deviation: {std_density:.6f}")
+    if mean_density > 0:
+        print(f"Coefficient of variation: {std_density/mean_density*100:.2f}%")
+    
+    return results
+
+def generate_seed_table():
+    """Generate a table of random seeds"""
+    print("\n=== RANDOM SEED GENERATOR ===")
+    n_seeds = int(input("Number of seeds to generate: ") or "20")
+    seeds = [random.getrandbits(32) for _ in range(n_seeds)]
+    
+    print(f"\nGenerated {n_seeds} random seeds:")
+    print("-" * 40)
+    for i, seed in enumerate(seeds, 1):
+        print(f"Seed {i:3d}: {seed:10d} (0x{seed:08X})")
+    print("-" * 40)
+    
+    # Save to file
+    save = input("\nSave to seeds.txt? [Y/N]: ").lower()
+    if save == 'y':
+        with open("random_seeds.txt", "w") as f:
+            f.write(f"# Generated {n_seeds} random seeds\n")
+            f.write(f"# Timestamp: {datetime.now().isoformat()}\n")
+            for seed in seeds:
+                f.write(f"{seed}\n")
+        print("Saved to random_seeds.txt")
+    
+    return seeds
+
+# ==============================================================================
+#   MAIN MENU (Updated with seed control options)
 # ==============================================================================
 
 if __name__ == "__main__":
@@ -1313,26 +1604,31 @@ if __name__ == "__main__":
     |_____|___/  |_|     |_|\__,_|_.__/   
                                           
     
-    Event-State Theory - Unified Laboratory [PHYSICAL SCALING EDITION]
+    Event-State Theory - Unified Laboratory [PHYSICAL SCALING + SEED CONTROL]
     Independent Researcher: Torben Wille
-    EST LABORATORY v3.0 - With Cosmological Scaling & Validation
+    EST LABORATORY v3.1 - With Cosmological Scaling & Reproducible Science
     
     === COSMOLOGICAL SIMULATIONS ===
     1. Standard Cosmic Emergence (Default with Physical Scaling)
-    2. Manual Config with Physical Scaling (Full Control)
+    2. Manual Config with Physical Scaling & Seed Control
     
     === VALIDATION & TESTING ===
     3. Enhanced Goldilocks Zone - All Complexity Methods
     4. Algorithmic Invariance Test (Critical Defense)
-    5. Algorithmic Invariance WITH Physical Scaling (NEW! - Scientific Rigor)
+    5. Algorithmic Invariance WITH Physical Scaling
     6. Nucleation Scaling Test (Robustness Proof)
     
     === PHYSICAL ANALYSIS ===
     7. Power Spectrum Analysis (With Physical Units)
     8. Parameter Phase Space (Traditional Goldilocks)
     
+    === SEED CONTROL & REPRODUCIBILITY ===
+    9. Batch Run with Multiple Seeds (Statistical Analysis)
+    10. Generate Random Seed Table
+    11. Reproduce from Seed File
+    
     === DIAGNOSTICS ===
-    9. Isotropy Check (Lattice Bias)
+    12. Isotropy Check (Lattice Bias)
 
     """)
     
@@ -1343,26 +1639,57 @@ if __name__ == "__main__":
     elif c == "2":
         Run_Cosmology_Simulation(manual=True)
     elif c == "3":
-        # You need to add this function from previous answer
         Run_Enhanced_Parameter_Sweep()
     elif c == "4":
         Run_Algorithmic_Invariance_Test()
     elif c == "5":
-        Run_Physical_Invariance_Test()  # NEW!
+        Run_Physical_Invariance_Test()
     elif c == "6":
         Run_Nucleation_Scaling_Test()
     elif c == "7":
-        # Optional: Add a dedicated power spectrum analysis
         print("Power Spectrum Analysis - run option 1 or 2 first")
         input("Press Enter to return to menu...")
         exec(open(__file__).read())
     elif c == "8":
-        # Simple parameter sweep (like original)
         Run_Parameter_Sweep_Simple()
     elif c == "9":
-        # You'll need to add Run_Relativity_Check() function
+        # NEW: Batch run with seeds
+        print("\n=== BATCH EXPERIMENTS WITH SEEDS ===")
+        n_runs = int(input("Number of runs: ") or "10")
+        seeds = [random.getrandbits(32) for _ in range(n_runs)]
+        
+        config = {
+            'size': 64,
+            'frames': 50,
+            'beta': 3.4,
+            'lam': 0.482,
+            'sites': 8,
+            'physical_scaling': False
+        }
+        
+        results = batch_experiments_with_seeds(seeds, config)
+        print(f"\nBatch experiments completed. Results saved in respective folders.")
+        
+    elif c == "10":
+        # NEW: Generate seed table
+        generate_seed_table()
+        
+    elif c == "11":
+        # NEW: Reproduce from seed file
+        seed_file = input("Path to seed_state.json file: ").strip()
+        if os.path.exists(seed_file):
+            seed_manager = reproduce_experiment(seed_file)
+            print("\nNow run your experiment with this seed manager.")
+            print(f"Seed: {seed_manager.current_seed}")
+            print("\nYou can:")
+            print("1. Run option 1 or 2 for cosmological simulation")
+            print("2. Run other tests which will use this seed")
+            input("\nPress Enter to continue...")
+        else:
+            print(f"File not found: {seed_file}")
+            
+    elif c == "12":
         Run_Relativity_Check()
-
     else:
         print("Invalid option. Running default simulation...")
-        Run_Cosmology_Simulation(manual=False)    
+        Run_Cosmology_Simulation(manual=False)
