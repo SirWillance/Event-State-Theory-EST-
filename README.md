@@ -1,7 +1,3 @@
-### 1. The Main `README.md` (Root)
-*Replace your current README with this. It directs traffic to the new folders.*
-
-
 # Event-State Theory (EST): The Computational Universe
 ### A Discrete Causal-Information Framework for Fundamental Physics
 
