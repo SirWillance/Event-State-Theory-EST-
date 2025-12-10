@@ -1,117 +1,80 @@
-# Event-State Theory (EST): A Computational Framework
-*A Discrete Causal-Information Framework for Cosmology and Fundamental Physics*
+---
+
+### 1. The Main `README.md` (Root)
+*Replace your current README with this. It directs traffic to the new folders.*
+
+
+# Event-State Theory (EST): The Computational Universe
+### A Discrete Causal-Information Framework for Fundamental Physics
+
+**Principal Investigator:** Torben Wille
+**Status:** Phase I Complete (Validation & Publication)
+**Latest Release:** December 10, 2025
+
+---
 
 ## 🔭 Project Overview
+Event-State Theory (EST) posits that physical reality is not a continuous geometric manifold, but a discrete computational optimization process governed by the **Principle of Computational Least Action**.
 
-This repository hosts the theoretical architecture, computational engines, and empirical proofs for **Event-State Theory (EST)**. EST posits that the universe is not a continuous geometric manifold, but a discrete computational optimization process governed by the **Principle of Computational Least Action**.
+By minimizing a thermodynamic Cost Function (`J`) based on **Algorithmic Complexity ($K$)** and **Information Fidelity ($I_F$)**, this framework unifies the macro-scale geometry of Cosmology with the micro-scale mechanics of Quantum Dynamics.
 
-By minimizing a thermodynamic Cost Function (`J`) based on **Conditional Kolmogorov Complexity**, this framework unifies the macro-scale geometry of Cosmology (Hubble Tension) with the micro-scale mechanics of Quantum Dynamics.
-
----
-
-## Validation Suite – December 1, 2025
-**All technical objections now formally closed.**
-
-After 48 hours of aggressive falsification attempts requested by peer reviewers, EST has survived every standard robustness test:
-
-| Test                        | Result                                      | Status |
-|-----------------------------|---------------------------------------------|--------|
-| Algorithmic Invariance      | Identical cosmic web across zlib, LZMA, BZIP2, Shannon entropy (variance < 0.00035) | PASSED |
-| Nucleation Scaling          | Linear density & stable web quality across 8–40 sites (5× range) | PASSED |
-| Parameter Cooling           | Early hot phase (λ=0.48) → late-time Ω_b ≈ 0.059 without tuning | PASSED |
-| Goldilocks Zone Width       | Structure emerges over wide β/λ plateau     | PASSED |
-
-
-→ Full reproducible validation suite (code + raw data):  
-  [/validation](validation)
-
-These results eliminate all remaining claims of fine-tuning, magic numbers, or compression artifacts.
+**Key Discovery (Dec 2025):** The simulation spontaneously reproduces the Matter Power Spectrum of the observable universe ($n_s \approx -3.03$) solely through data compression principles, without coding for Gravity or Dark Matter.
 
 ---
 
-Note: The laboratory file also contains experimental protocols for
-time-dilation scans and collapse tests which are currently disabled
-in the main menu. These are part of ongoing research and not yet
-covered by the published EST papers.
+## 📂 Repository Structure
+
+| Directory | Contents |
+| :--- | :--- |
+| **[`01_Publications`](01_Publications)** | The formal papers (I-IV) defining the theory and proofs. |
+| **[`02_Cosmology_Code`](02_Cosmology_Code)** | The **EST Cosmology Engine**. Run this to generate the universe. |
+| **[`03_Key_Evidence`](03_Key_Evidence)** | The empirical proofs: Cosmic Web, Power Spectrum, Lensing, Time. |
+| **[`04_Experimental_Prototypes`](04_Experimental_Prototypes)** | Specific mechanism tests: Gravity pathfinding, Time thermodynamics, Mass generation. |
+| **[`_Legacy_Archive`](_Legacy_Archive)** | Historical development logs and previous engine iterations. |
 
 ---
 
-## 📚 Research Library
-*The complete theoretical and empirical documentation is available in the `/Papers` directory.*
+## 🔬 The Four Pillars of Proof
 
-*   **📄 [00_Executive_Synthesis.pdf](Papers/00_Executive_Synthesis.pdf)** - *Start Here.* A 2-page summary of the theory, the simulation results, and the predictions.
-*   **📄 [01_Theoretical_Framework.pdf](Papers/01_Theoretical_Framework_v1.pdf)** - The original topological proposal identifying AMPC as the solution to the Hubble Tension.
-*   **📄 [02_Computational_Proof.pdf](Papers/02_Computational_Proof.pdf)** - Empirical validation via $256^3$ and $512^3$ cellular automaton simulations.
-*   **📄 [03_LHC_Experiment_Proposal.pdf](Papers/03_LHC_Experiment_Proposal.pdf)** - Methodology for detecting Pre-Causal Resonance (PCR) in LHC Minimum Bias data.
-*   **📄 [04_The_Event_State_Protocols.pdf](Papers/04_The_Event_State_Protocols_Monograph.pdf)** - The comprehensive monograph detailing the full axiomatic system.
-*   **📄 [05_Algorithmic_Proof_v2.pdf](Papers/05_Algorithmic_Proof_v2.pdf)** - Robustness and Invariance Verification.
-*   **📄 [06_Computational_Synthesis.pdf](Papers/Computational_Synthesis.pdf)** - Robustness and Invariance Verification.
+This repository contains the code and data validating the four core claims of EST:
+
+1.  **Structure:** The Cosmic Web emerges from random noise via $K$-minimization.
+2.  **Gravity:** Emerges as the path of least computational resistance (Lensing).
+3.  **Time:** Emerges as the thermodynamic update rate (asymptotic non-zero floor).
+4.  **Statistics:** The Power Spectrum ($n_s \approx -3.03$) matches stable gravitational clustering.
 
 ---
 
-## 🧪 The Computational Engines
-*Source code located in `/Simulations`*
-
-### 1. The Cosmology Engine (`EST_Cosmology_Engine.py`)
-A discrete 3D cellular automaton that tests the macro-scale formation of the universe.
-*   **Mechanism:** Asynchronous Multi-Point Crystallization (AMPC).
-*   **Results:**
-    *   Spontaneous emergence of the **Cosmic Web** from random noise.
-    *   **Baryon Asymmetry:** Reproduces $\eta \approx 7 \times 10^{-10}$ (matching Planck 2018) via "Scar Tissue" accumulation.
-    *   **Void Fraction:** ~80-99% depending on nucleation density ($N_0$).
-
-### 2. The Quantum Engine (`EST_PCR_Proof.py`)
-A relaxation algorithm testing the micro-scale causal dynamics.
-*   **Mechanism:** Global optimization of a 1D timeline under a high-energy constraint.
-*   **Results:**
-    *   Spontaneous generation of **Pre-Causal Resonance (PCR)**.
-    *   Predicts an exponential "vacuum ramp" ($t < 0$) detectable in high-energy collisions.
-
----
-
-## 🔬 Key Empirical Findings
-*The code reproduces observational reality at the "Edge of Chaos" phase boundary (`λ=0.48`, `β=3.4`).*
-
-| Observable | EST Simulation | Observed Reality | Status |
-| :--- | :--- | :--- | :--- |
-| **Cosmic Structure** | Filamentary Web | Filamentary Web | ✅ Match |
-| **Baryon Asymmetry** | $7.07 \times 10^{-10}$ | $6.12 \times 10^{-10}$ | ✅ Match |
-| **Expansion Topology** | Anisotropic | Hubble Tension | ✅ Match |
-| **Vacuum Response** | Exponential Ramp | Ridge Effect (?) | ⏳ Proposed |
-
----
-
-## ⚠️ Limitations & Roadmap
-*   **Grid Bias:** The current prototypes utilize linear compression algorithms (`zlib`) on a fixed Cartesian lattice. This introduces anisotropic artifacts ("Minecraft Physics") in propagation velocity.
-*   **Phase III:** Future work will migrate the kernel to **Dynamic Causal Graphs** to recover full Spherical Special Relativity.
-
----
-
-## 🛠️ Installation & Usage
-Requires **Python 3.8+** and standard scientific libraries.
+## 🚀 Quick Start
+To reproduce the **Cosmic Web** and **Baryon Asymmetry**:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/SirWillance/Event-State-Theory-EST-.git
-cd Event-State-Theory-EST-
+# 1. Install dependencies
+pip install -r requirements.txt
 
-# 2. Install dependencies
-pip install numpy matplotlib scipy tqdm imageio
-
-# 3. Run the Cosmology Simulation
-python Simulations/EST_Cosmology_Engine.py
-
-# Run the new validation tests (Dec 2025)
-python validation/code/EST_Engine_Enhanced.py
-# → Menu 5: Algorithmic Invariance | Menu 6: Nucleation Scaling
-
+# 2. Run the Engine
+python 02_Cosmology_Code/EST_Cosmology_Engine.py
+# Select Option 1 for Standard Simulation
 ```
 
+To verify **Emergent Gravity** (Lensing):
+```bash
+python 04_Experimental_Prototypes/est_gravity_lensing.py
+```
 
+---
 
+## 📚 Publications (Zenodo)
+*   **Paper I:** [The Theoretical Framework](https://doi.org/10.5281/zenodo.17698703) - Axioms and Derivations.
+*   **Paper II:** [Computational Proof](https://doi.org/10.5281/zenodo.17769476) - The 3D Simulation Results.
+*   **Paper III:** [Computational Synthesis](https://doi.org/10.5281/zenodo.17798980) - Unifying Gravity, Time, and Structure.
+*   **Paper IV:** [Statistical Homology](LINK_TO_PAPER_4) - The Power Spectrum Analysis ($n_s \approx -3.03$).
 
-## 📬 Contact & Citation
+---
+
+## 📬 Contact
 **Torben Wille**  
 *Independent Systems Researcher*  
 Research artifacts archived on [Zenodo](https://zenodo.org/records/17698703).
 ```
+
