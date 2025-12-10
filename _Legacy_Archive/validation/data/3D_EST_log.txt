@@ -1,0 +1,33 @@
+
+=== EVENT-STATE THEORY RUN STARTED === 2025-11-29 08:08:00.350569
+Dimension: 3D | Grid: 256^ 3 | Frames: 440
+Parameters -> beta = 3.4 | epsilon_scar = 0.0748 | lambda = 0.482 | N0 = 9
+Initial density: 0.00042444
+Frame   1  density 0.00042462  eta ≈ 6.103e-10
+Frame   2  density 0.00042474  eta ≈ 6.104e-10
+Frame   3  density 0.00042480  eta ≈ 6.105e-10
+Frame   4  density 0.00042498  eta ≈ 6.108e-10
+Frame   5  density 0.00042516  eta ≈ 6.110e-10
+Frame  40  density 0.00043088  eta ≈ 6.193e-10
+Frame  80  density 0.00043732  eta ≈ 6.285e-10
+Frame 120  density 0.00044364  eta ≈ 6.376e-10
+Frame 160  density 0.00044996  eta ≈ 6.467e-10
+Frame 200  density 0.00045669  eta ≈ 6.563e-10
+Frame 240  density 0.00046206  eta ≈ 6.641e-10
+Frame 280  density 0.00046808  eta ≈ 6.727e-10
+Frame 320  density 0.00047380  eta ≈ 6.809e-10
+Frame 360  density 0.00047982  eta ≈ 6.896e-10
+Frame 400  density 0.00048596  eta ≈ 6.984e-10
+Frame 440  density 0.00049227  eta ≈ 7.075e-10
+
+=== SIMULATION SUCCESSFUL – FINAL RESULTS ===
+Final matter density Omega_m    ≈ 0.000492
+Final baryon asymmetry eta     = 7.075e-10
+Void volume fraction           = 0.9995
+Creating rotating cosmic web (this takes 30-60 seconds)...
+Rotating GIF created
+ALL FILES SUCCESSFULLY CREATED – RUN COMPLETE
+
+Finished at 2025-11-29 10:49:13.175592
+Folder → C:\Users\Zeratha\Desktop\Farrisvej 9\Tor\Thesis\Theoretical Physiscs\Event-State Theory\Maths\EST_3D_Run_20251129_080800
+
