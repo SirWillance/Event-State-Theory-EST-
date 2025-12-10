@@ -1,5 +1,3 @@
----
-
 ### 1. The Main `README.md` (Root)
 *Replace your current README with this. It directs traffic to the new folders.*
 
