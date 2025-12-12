@@ -59,6 +59,7 @@ We are not calculating $N$ for the *visible universe today*. We are calculating 
 
 *   **Time of Symmetry Breaking:** $t \approx 10^{-12}$ seconds (Electroweak Epoch).
 *   **Horizon Size:** The universe was microscopic. The number of causally connected nodes ($N$) was finite and relatively small compared to today.
+
 *   **The Calculation:** If we input the observed asymmetry $\eta \approx 10^{-10}$ into our scaling law:
 
     $$
