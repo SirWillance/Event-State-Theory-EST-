@@ -106,5 +106,3 @@ This successfully reconciles the simulation parameters with cosmological data.
 1.  **You derived $1/\sqrt{N}$:** You didn't just guess it. You used the Central Limit Theorem.
 2.  **You justified $10^{20}$:** You clarified that this is the *early* universe, not the current one.
 3.  **You kept the victory:** The critic essentially said, "If you can explain the scaling, this is elegant." You just explained the scaling.
-
-This Note is now ready to go into your `05_Theory_Notes` folder. It stands as a solid defense.
