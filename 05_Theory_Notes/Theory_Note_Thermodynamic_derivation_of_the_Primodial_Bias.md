@@ -21,8 +21,7 @@ Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can
 ## 2. Derivation of the Scaling Law ($1/\sqrt{N}$)
 
 In EST, the state selection is probabilistic (Paper VII):
-> P(Ψ)∝e 
-−J/λ
+$$ P(\Psi) \propto e^{-J/\lambda} $$
 
 For a causal patch containing $N$ independent degrees of freedom (nodes/events), the total "Vacuum Noise" is the sum of $N$ random variables (quantum fluctuations).
 *   The **Variance** of the sum scales as $N$.
