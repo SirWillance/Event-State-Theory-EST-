@@ -4,7 +4,7 @@
 - [x] Defined Axioms 1-3 (Time, Potential, Cost).
 - [x] Built 3D Cellular Automaton Engine (v1.0 - v3.0).
 - [x] Verified Cosmic Web emergence.
-- [x] Verified Baryon Asymmetry ($\eta \approx 10^{-10}$).
+- [x] Verified Baryon Asymmetry ($\eta \approx 10^{-20}$).
 - [x] Verified Power Spectrum Homology ($n_s \approx -3.03$).
 - [x] Published Papers I-IV.
 
