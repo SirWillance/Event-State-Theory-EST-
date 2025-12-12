@@ -16,6 +16,3 @@
 ### 🔮 Phase III: The Engineering (Future)
 - [ ] **Causal Forking:** Simulating state-restoration and branching timelines.
 - [ ] **Inertial Decoupling:** Testing cost-function manipulation for propulsion mechanics.
-```
-
----
