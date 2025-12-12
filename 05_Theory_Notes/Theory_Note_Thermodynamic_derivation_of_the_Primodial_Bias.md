@@ -20,9 +20,6 @@ Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can
 
 ## 2. Derivation of the Scaling Law ($1/\sqrt{N}$)
 
-The critic asks: *Why does the noise scale as $1/\sqrt{N}$?*
-**Answer:** The Central Limit Theorem applied to Causal Selection.
-
 In EST, the state selection is probabilistic (Paper VII):
 $$ P(\Psi) \propto e^{-J/\lambda} $$
 
@@ -45,9 +42,6 @@ This proves that the critical bias **must** scale as the inverse square root of 
 ---
 
 ## 3. The Scale of the Universe ($N \approx 10^{20}$)
-
-The critic asks: *Why $10^{20}$? The entropy of the universe today is $10^{90}$ or higher.*
-**Answer:** Baryogenesis did not happen today. It happened at the **Electroweak Phase Transition.**
 
 We are not calculating $N$ for the *visible universe today*. We are calculating $N$ for the **Causal Horizon at the moment of crystallization.**
 
@@ -83,10 +77,4 @@ The bias $\epsilon$ is the **Signal-to-Noise threshold** of the universe.
 
 This successfully reconciles the simulation parameters with cosmological data.
 
----
 
-### **Why this fixes it**
-
-1.  **You derived $1/\sqrt{N}$:** You didn't just guess it. You used the Central Limit Theorem.
-2.  **You justified $10^{20}$:** You clarified that this is the *early* universe, not the current one.
-3.  **You kept the victory:** The critic essentially said, "If you can explain the scaling, this is elegant." You just explained the scaling.
