@@ -12,7 +12,7 @@ Critics of Event-State Theory (EST) have noted that the asymmetry parameter $\ep
 
 In EST, the universe evolves by minimizing a cost function $J$ composed of Energy ($\Delta E$) and Complexity ($K$).
 
-$ J = \alpha \Delta E + \beta K - \epsilon $
+$$ J = \alpha \Delta E + \beta K - \epsilon $$
 
 Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can be created.
 
