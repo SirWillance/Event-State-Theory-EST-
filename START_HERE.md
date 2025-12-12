@@ -26,6 +26,3 @@ If you want to understand *why* particles have mass or *why* time flows, look at
 **The Thesis:**
 We do not live in a simulation.
 We live in a reality that behaves like a computer because **Information Processing** is the fundamental law of nature.
-```
-
----
