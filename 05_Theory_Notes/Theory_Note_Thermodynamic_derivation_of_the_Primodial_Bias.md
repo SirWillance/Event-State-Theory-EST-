@@ -58,6 +58,7 @@ This proves that the critical bias **must** scale as the inverse square root of 
 We are not calculating $N$ for the *visible universe today*. We are calculating $N$ for the **Causal Horizon at the moment of crystallization.**
 
 *   **Time of Symmetry Breaking:** $t \approx 10^{-12}$ seconds (Electroweak Epoch).
+  
 *   **Horizon Size:** The universe was microscopic. The number of causally connected nodes ($N$) was finite and relatively small compared to today.
 
 *   **The Calculation:** If we input the observed asymmetry $\eta \approx 10^{-10}$ into our scaling law:
