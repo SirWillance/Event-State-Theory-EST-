@@ -25,7 +25,7 @@ By minimizing a thermodynamic Cost Function (`J`) based on **Algorithmic Complex
 *   **[Paper I: Theoretical Framework](https://doi.org/10.5281/zenodo.17698703):** Defines the axioms, the Cost Function $J$, and the emergence of time.
 *   **[Paper II: Computational Emergence](https://doi.org/10.5281/zenodo.17769476):** 3D simulations demonstrating the spontaneous generation of the Cosmic Web and Baryon Asymmetry.
 *   **[Paper III: Computational Synthesis](https://doi.org/10.5281/zenodo.17798980):** Unifying gravity, thermodynamics, and causal structure.
-*   **[Paper IV: Statistical Homology](LINK_TO_PAPER_4):** Analysis of the simulated Matter Power Spectrum ($n_s \approx -3.03$).
+*   **[Paper IV: Statistical Homology](https://zenodo.org/records/17877635):** Analysis of the simulated Matter Power Spectrum ($n_s \approx -3.03$).
 
 ---
 
