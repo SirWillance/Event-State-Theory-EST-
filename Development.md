@@ -8,7 +8,7 @@
 - [x] Verified Power Spectrum Homology ($n_s \approx -3.03$).
 - [x] **Published Papers I-IV.**
 
-### ✅ Phase II: The Unification (Completed Dec 2025)
+### ✅ Phase II: The Unification (in progress)
 - [ ] **Relational Graph Engine:** Moved off Cartesian grid; verified organic clustering and emergent isotropy (Paper VI validation).
 - [ ] **The Discovery:** Identified **$7.83\sigma$ Topological Locking anomaly** in CMS Open Data (Paper V).
 - [ ] **The Derivations:** Formally derived General Relativity (Paper VI) and Quantum Mechanics (Paper VII) from the EST Cost Function.
