@@ -61,7 +61,7 @@ We are not calculating $N$ for the *visible universe today*. We are calculating 
   
 *   **Horizon Size:** The universe was microscopic. The number of causally connected nodes ($N$) was finite and relatively small compared to today.
 
-*   **The Calculation:** If we input the observed asymmetry $\eta \approx 10^{-10}$ into our scaling law:
+  **The Calculation:** If we input the observed asymmetry $\eta \approx 10^{-10}$ into our scaling law:
 
     $$
     \epsilon \approx \eta \implies 10^{-10} \approx \frac{1}{\sqrt{N}} \implies N \approx 10^{20}
