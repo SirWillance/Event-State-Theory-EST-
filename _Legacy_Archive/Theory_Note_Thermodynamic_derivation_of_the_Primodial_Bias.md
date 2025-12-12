@@ -16,10 +16,10 @@ $$ J = \alpha \Delta E + \beta K - \epsilon $$
 
 Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can be created.
 
-1.  **Symmetric State ($M \approx \bar{M}$):**
+1.  **Symmetric State (M ≈ M̄):**
     In a symmetric vacuum, particle-antiparticle pairs constantly annihilate. This fluctuating energy density creates a high "metabolic cost" for the system.
 
-    $$ \Delta E_{\text{sym}} \gg 0 \implies J_{\text{sym}} \text{ is High.} $$
+    > ΔE_sym ≫ 0 → J_sym is **High**
 
 2.  **Asymmetric State ($M \gg \bar{M}$):**
     If one population dominates, annihilation ceases. The system cools into a stable state.
