@@ -21,7 +21,7 @@ Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can
 ## 2. Derivation of the Scaling Law ($1/\sqrt{N}$)
 
 In EST, the state selection is probabilistic (Paper VII):
-$$ P(\Psi) \propto e^{-J/\lambda} $$
+$$ P(\Psi) \ \propto\  e^{-J/\lambda} $$
 
 For a causal patch containing $N$ independent degrees of freedom (nodes/events), the total "Vacuum Noise" is the sum of $N$ random variables (quantum fluctuations).
 *   The **Variance** of the sum scales as $N$.
@@ -35,7 +35,7 @@ For the bias to win, the Signal must exceed the Noise:
 $$ \epsilon \cdot N >\sqrt{N} $$
 
 Dividing by $N$:
-$ \epsilon>\frac{1}\sqrt{N}$ ($1/\sqrt{N}$)
+$$ \epsilon>\frac{1}\sqrt{N} $$
 
 This proves that the critical bias **must** scale as the inverse square root of the system size. This is not a guess; it is a statistical necessity.
 
