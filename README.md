@@ -62,7 +62,7 @@ python 04_Experimental_Prototypes/est_gravity_lensing.py
 *   **Paper I:** [The Theoretical Framework](https://doi.org/10.5281/zenodo.17698703) - Axioms and Derivations.
 *   **Paper II:** [Computational Proof](https://doi.org/10.5281/zenodo.17769476) - The 3D Simulation Results.
 *   **Paper III:** [Computational Synthesis](https://doi.org/10.5281/zenodo.17798980) - Unifying Gravity, Time, and Structure.
-*   **Paper IV:** [Statistical Homology](LINK_TO_PAPER_4) - The Power Spectrum Analysis ($n_s \approx -3.03$).
+*   **Paper IV:** [Statistical Homology](https://zenodo.org/records/17877635) - The Power Spectrum Analysis ($n_s \approx -3.03$).
 
 ---
 
