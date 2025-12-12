@@ -13,7 +13,7 @@
 - [x] **The Discovery:** Identified **$7.83\sigma$ Topological Locking anomaly** in CMS Open Data (Paper V).
 - [x] **The Derivations:** Formally derived General Relativity (Paper VI) and Quantum Mechanics (Paper VII) from the EST Cost Function.
 - [x] **The PCR Proof:** Mathematically derived the Pre-Causal Resonance signal from the discrete Action (Paper VIII).
-- [x] **Drafted Papers V-VIII.** (Ready for Staged Release).
+- [ ] **Drafted Papers V-VIII.** (in progress).
 
 ### 🚀 Phase III: The Disclosure (Current Focus - Q1 2026)
 - [ ] **Journal Submission:** Submit Paper V (The Anomaly) to *Physics Letters A* or *Entropy*.
