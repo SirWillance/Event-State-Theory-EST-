@@ -1,18 +1,27 @@
 # Development Roadmap
 
-### ✅ Phase I: The Foundation (Completed Dec 2025)
+### ✅ Phase I: The Foundation (Completed Nov 2025)
 - [x] Defined Axioms 1-3 (Time, Potential, Cost).
 - [x] Built 3D Cellular Automaton Engine (v1.0 - v3.0).
 - [x] Verified Cosmic Web emergence.
-- [x] Verified Baryon Asymmetry ($\eta \approx 10^{-20}$).
+- [x] Verified Baryon Asymmetry ($\eta \approx 10^{-10}$).
 - [x] Verified Power Spectrum Homology ($n_s \approx -3.03$).
-- [x] Published Papers I-IV.
+- [x] **Published Papers I-IV.**
 
-### 🚧 Phase II: The Mechanics (Current Focus)
-- [ ] **Relational Graph Engine:** Moving off the Cartesian grid to solve anisotropy artifacts.
-- [ ] **Continuum Limit:** Deriving the Euler-Lagrange equations directly from the Cost Function ($J$).
-- [ ] **LHC Data Mining:** Verifying Vacuum Stability predictions using CMS Open Data.
+### ✅ Phase II: The Unification (Completed Dec 2025)
+- [x] **Relational Graph Engine:** Moved off Cartesian grid; verified organic clustering and emergent isotropy (Paper VI validation).
+- [x] **The Discovery:** Identified **$7.83\sigma$ Topological Locking anomaly** in CMS Open Data (Paper V).
+- [x] **The Derivations:** Formally derived General Relativity (Paper VI) and Quantum Mechanics (Paper VII) from the EST Cost Function.
+- [x] **The PCR Proof:** Mathematically derived the Pre-Causal Resonance signal from the discrete Action (Paper VIII).
+- [x] **Drafted Papers V-VIII.** (Ready for Staged Release).
 
-### 🔮 Phase III: The Engineering (Future)
+### 🚀 Phase III: The Disclosure (Current Focus - Q1 2026)
+- [ ] **Journal Submission:** Submit Paper V (The Anomaly) to *Physics Letters A* or *Entropy*.
+- [ ] **arXiv Strategy:** Secure endorsement for Papers I & II to establish the beachhead.
+- [ ] **The Staged Reveal:** Release the Unifier Arc (Papers V-VIII) following the "Evidence First" strategy.
+- [ ] **External Validation:** Invite experimentalists to reproduce the CMS result.
+
+### 🔮 Phase IV: The Engineering (Future)
+- [ ] **Vacuum Engineering:** Testing "Inverted Microwave" thermodynamics to harvest vacuum potential (Zero-Point concept).
 - [ ] **Causal Forking:** Simulating state-restoration and branching timelines.
-- [ ] **Inertial Decoupling:** Testing cost-function manipulation for propulsion mechanics.
+- [ ] **Inertial Decoupling:** Testing cost-function manipulation for propulsion mechanics (The "Screw" mechanism).
