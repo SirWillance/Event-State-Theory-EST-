@@ -21,10 +21,10 @@ Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can
 
     > ΔE_sym ≫ 0 → J_sym is **High**
 
-2.  **Asymmetric State ($M \gg \bar{M}$):**
+2.  **Asymmetric State (M ≫ M̄):**
     If one population dominates, annihilation ceases. The system cools into a stable state.
-
-    $$ \Delta E_{\text{asym}} \approx 0 \implies J_{\text{asym}} \text{ is Low.} $$
+    
+    > ΔE_asym ≈ 0 → J_asym is **Low**
 
 **Conclusion:** The EST Cost Function naturally drives the universe toward asymmetry to minimize the computational cost of continuous annihilation.
 
@@ -47,13 +47,13 @@ If the bias $\epsilon$ is smaller than this noise, the system cannot "feel" the 
 For Symmetry Breaking to occur (i.e., for the "Scar Tissue" to take hold), the bias must be strong enough to overcome the noise floor.
 
 **The Stability Criterion:**
-$$ \epsilon > \sigma_{\text{noise}} $$
+ε > σ_noise
 
 Substituting the noise scale, we derive the **Epsilon Scaling Law**:
 
-$$ \epsilon_{\text{critical}}(N) \approx \frac{k}{\sqrt{N}} $$
+ε_critical(N) ≈ k / √N
 
-*(Where $k$ is a geometric factor of order $\mathcal{O}(1)$).*
+*(Where k is a geometric factor of order O(1)).*
 
 This implies that **smaller systems require a larger bias** to break symmetry.
 
@@ -66,14 +66,14 @@ We can now test this scaling law against our two available data points: the comp
 ### Case A: The EST Simulation
 *   **System Size:** The simulation utilized a 64-grid with approximately $N \approx 300$ active events per frame.
 *   **Predicted Critical Bias:**
-    $$ \epsilon_{\text{sim}} \approx \frac{1}{\sqrt{300}} \approx 0.0577 $$
+    ε_sim ≈ 1/√300 ≈ 0.0577
 *   **Used Bias:** The simulation stabilized at $\epsilon = 0.0748$.
 *   **Result:** The used value is $\approx 1.3 \times$ the noise floor. This confirms that the parameter was not arbitrarily tuned, but set to the **minimum necessary value** to achieve stability in a system of size $N=300$.
 
 ### Case B: The Physical Universe
 *   **Observed Bias:** The observed baryon-to-photon ratio is $\eta \approx 6 \times 10^{-10}$.
-*   **Implied System Size:** Using the scaling law, we can solve for $N$ at the moment of crystallization (Baryogenesis):
-    $$ 10^{-10} \approx \frac{1}{\sqrt{N}} \implies \sqrt{N} \approx 10^{10} \implies N \approx 10^{20} $$
+*   **Implied System Size:** Using the scaling law, we can solve for N at the moment of crystallization (Baryogenesis):
+    10^(-10) ≈ 1/√N → √N ≈ 10^(10) → N ≈ 10^(20)
 *   **Physical Interpretation:** This suggests that the symmetry breaking event occurred when the causal horizon of the universe contained approximately $10^{20}$ degrees of freedom.
 
 ---
