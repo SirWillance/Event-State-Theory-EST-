@@ -60,9 +60,9 @@ We are not calculating $N$ for the *visible universe today*. We are calculating 
 *   **Time of Symmetry Breaking:** $t \approx 10^{-12}$ seconds (Electroweak Epoch).
 *   **Horizon Size:** The universe was microscopic. The number of causally connected nodes ($N$) was finite and relatively small compared to today.
 *   **The Calculation:** If we input the observed asymmetry $\eta \approx 10^{-10}$ into our scaling law:   
-    $$
-    \epsilon \approx \eta \implies 10^{-10} \approx \frac{1}{\sqrt{N}} \implies N \approx 10^{20}
-    $$
+        $$
+        \epsilon \approx \eta \implies 10^{-10} \approx \frac{1}{\sqrt{N}} \implies N \approx 10^{20}
+        $$
     
 *   **Physical Meaning:** This implies the causal horizon at the moment of decision contained $\sim 10^{20}$ degrees of freedom. This is a falsifiable prediction about the scale of the early universe in EST.
 
