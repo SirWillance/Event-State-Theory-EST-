@@ -62,7 +62,8 @@ We are not calculating $N$ for the *visible universe today*. We are calculating 
 
 **Calculation from observed asymmetry:**
 
-Given $\eta \approx 10^{-10}$ and $\epsilon \approx \eta$, from $\epsilon \approx 1/\sqrt{N}$ we get:
+Given $\eta \approx 10^{-10}$ and $\epsilon \approx \eta$, 
+      from $\epsilon \approx 1/\sqrt{N}$ we get:
 $10^{-10} \approx 1/\sqrt{N} \implies \sqrt{N} \approx 10^{10} \implies N \approx 10^{20}$
 
 *   **Physical Meaning:** This implies the causal horizon at the moment of decision contained $\sim 10^{20}$ degrees of freedom. This is a falsifiable prediction about the scale of the early universe in EST.
