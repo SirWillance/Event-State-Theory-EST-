@@ -47,7 +47,7 @@ By minimizing a thermodynamic Cost Function (`J`) based on **Algorithmic Complex
 | **[`02_Cosmology_Code`](02_Cosmology_Code)** | The **EST Cosmology Engine**. Generates the Cosmic Web. |
 | **[`03_PCR_Simulation`](03_PCR_Simulation)** | **[Preview]** Numerical solver demonstrating the Pre-Causal Resonance effect. |
 | **[`04_Experimental_Prototypes`](04_Experimental_Prototypes)** | Mechanism tests for upcoming papers. |
-| **[`05_Theory_Notes`](05_Theory_Notes)** | **[Theory Note: Origin of the Cosmic Web](05_Theory_Notes/Theory_Note_AMPC_Thermodynamics.md)**. |
+| **[`Theory_Notes`](Theory_Notes)** | **[Theory Note: Origin of the Cosmic Web]/[Derivation of ($\epsilon$)(05_Theory_Notes/Theory_Note_AMPC_Thermodynamics.md)**. |
 
 ---
 
