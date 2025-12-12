@@ -70,4 +70,9 @@ python 03_PCR_Simulation/EST_PCR_Prediction.py
 *Correspondence:* [event.state.theory@gmail.com](mailto:event.state.theory@gmail.com)
 
 Research artifacts archived on [Zenodo](https://zenodo.org/records/17698703).
-```
+
+## ⚖️ License
+
+**Code:** The source code in this repository is licensed under the **MIT License**.
+
+**Papers:** The theoretical manuscripts (Papers I-VIII and the Synthesis) are licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license. You are free to share and adapt the work, provided you give appropriate credit to the original author, **Torben Wille**.
