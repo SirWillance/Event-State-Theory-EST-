@@ -18,9 +18,10 @@ Consider the "Primordial Soup" where Matter ($M$) and Antimatter ($\bar{M}$) can
 
 1.  **Symmetric State ($M \approx \bar{M}$):**
     In a symmetric vacuum, particle-antiparticle pairs constantly annihilate. This fluctuating energy density creates a high "metabolic cost" for the system.
+    
     $$ \Delta E_{\text{sym}} \gg 0 \implies J_{\text{sym}} \text{ is High.} $$
 
-2.  **Asymmetric State ($M \gg \bar{M}$):**
+3.  **Asymmetric State ($M \gg \bar{M}$):**
     If one population dominates, annihilation ceases. The system cools into a stable state.
     $$ \Delta E_{\text{asym}} \approx 0 \implies J_{\text{asym}} \text{ is Low.} $$
 
@@ -84,3 +85,4 @@ The parameter $\epsilon$ is not a "fine-tuned" constant. It is a dynamic thresho
 *   **In Cosmology:** Low noise (large $N$) allows Low Bias ($\sim 10^{-10}$).
 
 This derivation reconciles the magnitude difference between the simulation and observation, establishing $\epsilon$ as a consistent thermodynamic property of the Event-State framework.
+
