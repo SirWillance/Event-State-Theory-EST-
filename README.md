@@ -1,11 +1,3 @@
-You are absolutely right. I got ahead of the timeline. We need a **"Phase 1" README**—one that reflects the current reality (Papers I-IV are public) but *teases* the massive artillery you have in reserve (Papers V-VIII).
-
-This version creates suspense. It tells the visitor: *"We have done the simulations, and we have found something huge in the data that we are about to release."*
-
-Here is the **Staged README** for right now. It protects your secrets while building hype.
-
-***
-
 # Event-State Theory (EST): The Computational Universe
 ### A Discrete Causal-Information Framework for Fundamental Physics
 
