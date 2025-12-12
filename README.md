@@ -21,7 +21,7 @@ By minimizing a thermodynamic Cost Function (`J`) based on **Algorithmic Complex
 ## 🗺️ Current Publications (Phase I)
 *Available now on Zenodo and GitHub.*
 
-*   **[The Foundational Synthesis]([LINK_TO_SYNTHESIS](https://github.com/SirWillance/Event-State-Theory-EST-/blob/The-Sandbox-Interface/01_Publications/EST_Foundational_Synthesis.pdf)):** The executive summary of the project. It connects the axioms to the cosmological simulations and outlines the upcoming empirical results. **Start Here.**
+*   **[The Foundational Synthesis](https://github.com/SirWillance/Event-State-Theory-EST-/blob/The-Sandbox-Interface/01_Publications/EST_Foundational_Synthesis.pdf):** The executive summary of the project. It connects the axioms to the cosmological simulations and outlines the upcoming empirical results. **Start Here.**
 *   **[Paper I: Theoretical Framework](https://doi.org/10.5281/zenodo.17698703):** Defines the axioms, the Cost Function $J$, and the emergence of time.
 *   **[Paper II: Computational Emergence](https://doi.org/10.5281/zenodo.17769476):** 3D simulations demonstrating the spontaneous generation of the Cosmic Web and Baryon Asymmetry.
 *   **[Paper III: Computational Synthesis](https://doi.org/10.5281/zenodo.17798980):** Unifying gravity, thermodynamics, and causal structure.
