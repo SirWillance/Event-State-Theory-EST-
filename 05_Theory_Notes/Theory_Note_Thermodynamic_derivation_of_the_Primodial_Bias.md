@@ -35,7 +35,7 @@ For the bias to win, the Signal must exceed the Noise:
 $$ \epsilon \cdot N >\sqrt{N} $$
 
 Dividing by $N$:
-$$ \epsilon > \frac{1}\sqrt{N} $$ ($1/\sqrt{N}$)
+$ \epsilon>\frac{1}\sqrt{N}$ ($1/\sqrt{N}$)
 
 This proves that the critical bias **must** scale as the inverse square root of the system size. This is not a guess; it is a statistical necessity.
 
