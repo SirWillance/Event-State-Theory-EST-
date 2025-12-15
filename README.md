@@ -93,7 +93,7 @@ python 03_PCR_Simulation/EST_PCR_Prediction.py
 ## 📬 Contact & Correspondence
 **Torben Wille**
 *Independent Systems Researcher*
-*Correspondence:* [event.state.theory@gmail.com](find.me)
+*Correspondence:* [Event.State.Theory@gmail.com]
 
 Research artifacts archived on [Zenodo](https://zenodo.org/records/17698703).
 
