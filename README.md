@@ -1,10 +1,11 @@
-# Event-State Theory (EST): The Computational Universe
-### A Discrete Causal-Information Framework for Fundamental Physics
+# Event-State Theory (EST)
+### A Conceptual and Computational Exploration of Variational Structure in Physics
 
-**Principal Investigator:** Torben Wille
-**Status:** Phase I Complete (Foundational Framework)
-**Phase II Status:** In Preparation (Empirical Validation & Derivations)
-**Latest Release:** December 12, 2025
+**Author:** Torben Wille  
+**Affiliation:** Independent Researcher  
+**Project Status:** Active exploratory research  
+**Repository Role:** Open preprints, simulations, and theory notes  
+**Last updated:** December 2025
 
 ---
 
@@ -13,8 +14,28 @@ Event-State Theory (EST) posits that physical reality is not a continuous geomet
 
 By minimizing a thermodynamic Cost Function (`J`) based on **Algorithmic Complexity ($K$)** and **Information Fidelity ($I_F$)**, this framework aims to unify the macro-scale geometry of **Cosmology** with the micro-scale mechanics of **Quantum Dynamics**.
 
-### 🚨 Upcoming Discovery (Early 2026)
-**The Vacuum Freezes Under Load:** Preliminary analysis of CMS Open Data indicates a statistically significant **$7.83\sigma$ anomaly** consistent with EST predictions of "Topological Locking." Formal publication of this empirical evidence (Paper V) and the associated derivations of General Relativity (Paper VI) and Quantum Mechanics (Paper VII) is scheduled for the Phase II release.
+EST explores the possibility that these recurring structures reflect a deeper **selection principle**, rather than independent postulates. The project approaches this idea conceptually and computationally, using discrete models, simulations, and empirical probes as tools for investigation.
+
+🚨 EST does **not** aim to replace established physical theories.  
+Instead, it offers a lens that operates *orthogonally* to existing frameworks, asking why such theories take the forms they do.
+
+---
+
+## 🔍Scope and Intent
+
+This repository contains:
+
+- preprint papers (not peer-reviewed),
+- numerical simulations,
+- prototype experiments,
+- and informal theory notes.
+
+The material is shared to **invite engagement**, critique, and reinterpretation.
+
+Some results may turn out to be incomplete or incorrect.  
+That outcome is explicitly acceptable.
+
+The primary goal is to surface a potentially useful idea — not to close it.
 
 ---
 
@@ -28,13 +49,18 @@ By minimizing a thermodynamic Cost Function (`J`) based on **Algorithmic Complex
 
 ---
 
-## 📅 Roadmap: The Unifier Arc (Phase II)
-*Forthcoming papers to be released Q1 2026.*
+## 📅 Ongoing and Forthcoming Work (Phase II)
 
-*   **Paper V:** Empirical Evidence of Vacuum Stability ($7.83\sigma$ Anomaly).
-*   **Paper VI:** Derivation of General Relativity from Discrete Anti-Aliasing.
-*   **Paper VII:** Derivation of Quantum Mechanics from Probabilistic Selection.
-*   **Paper VIII:** Mathematical Proof of Pre-Causal Resonance (PCR).
+Several follow-up papers are in preparation. These are **not yet published** and are listed here for transparency, not as claims of completion.
+
+Planned topics include:
+
+- empirical analysis of high-density vacuum behavior in collider data,
+- interpretation of gravitational dynamics in discrete optimization models,
+- probabilistic selection and its relation to quantum formalisms,
+- mathematical structure of global constraint satisfaction (“pre-causal” effects).
+
+Details may change as analysis continues.
 
 ---
 
@@ -67,7 +93,7 @@ python 03_PCR_Simulation/EST_PCR_Prediction.py
 ## 📬 Contact & Correspondence
 **Torben Wille**
 *Independent Systems Researcher*
-*Correspondence:* [event.state.theory@gmail.com](mailto:event.state.theory@gmail.com)
+*Correspondence:* [event.state.theory@gmail.com](Torben.Wille@gmx.net)
 
 Research artifacts archived on [Zenodo](https://zenodo.org/records/17698703).
 
