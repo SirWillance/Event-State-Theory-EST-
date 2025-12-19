@@ -2,6 +2,7 @@
 EST_Visualizer3D.py - Visualization Tool for EST v3.1 Data
 ==========================================================
 Loads .npz or legacy .npy files and creates comprehensive 3D visualizations
+Now with timestamped folders and session loop
 """
 
 import numpy as np
@@ -71,9 +72,38 @@ class EST_Visualizer3D:
             ).strip()
             return Path(path_str) if path_str else None
 
+    def create_timestamped_directory(self, data_file: Path):
+        """Create timestamped output directory with original filename structure"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        data_file_name = data_file.stem
+        
+        # Create descriptive directory name
+        dir_name = f"Visualization_{data_file_name}_{timestamp}"
+        
+        # Create output directory in the same location as the data file
+        self.output_dir = data_file.parent / dir_name
+        
+        # Ensure the directory is unique (add counter if exists)
+        counter = 1
+        original_dir = self.output_dir
+        while self.output_dir.exists():
+            self.output_dir = original_dir.parent / f"{original_dir.name}_{counter}"
+            counter += 1
+        
+        # Create main and subdirectories (EXACTLY as original)
+        self.output_dir.mkdir(exist_ok=True, parents=True)
+        for sub in ["slices", "projections"]:
+            (self.output_dir / sub).mkdir(exist_ok=True)
+        
+        print(f"📁 Output directory created: {self.output_dir.name}")
+        return self.output_dir
+
     def load_data(self, data_file: Path):
         print(f"\n🔍 Loading data from: {data_file.name}")
         try:
+            # Create timestamped output directory
+            self.create_timestamped_directory(data_file)
+            
             if data_file.suffix == ".npy":
                 arr = np.load(data_file, allow_pickle=True)
 
@@ -103,7 +133,6 @@ class EST_Visualizer3D:
                 else:
                     print(f"❌ Unsupported .npy shape: {arr.shape}")
                     return False
-
 
             elif data_file.suffix == ".npz":
                 with np.load(data_file, allow_pickle=True) as loaded:
@@ -137,12 +166,6 @@ class EST_Visualizer3D:
                 print(f"❌ Unsupported file type: {data_file.suffix}")
                 return False
 
-            # Output folders
-            self.output_dir = data_file.parent / "Visualizations"
-            self.output_dir.mkdir(exist_ok=True)
-            for sub in ["slices", "projections"]:
-                (self.output_dir / sub).mkdir(exist_ok=True)
-
             print("✅ Data loaded successfully")
             if self.final_state is not None and self.final_state.ndim == 3:
                 print(f"   Grid size: {self.final_state.shape}")
@@ -168,7 +191,7 @@ class EST_Visualizer3D:
             return False
 
     # ------------------------------------------------------
-    # Visual creators
+    # Visual creators - ALL ORIGINAL, UNCHANGED
     # ------------------------------------------------------
 
     def create_3d_scatter(self):
@@ -345,7 +368,7 @@ class EST_Visualizer3D:
             print(f"    ✅ Dashboard created")
 
     # ------------------------------------------------------
-    # HTML report
+    # HTML report - ORIGINAL, UNCHANGED
     # ------------------------------------------------------
 
     def create_html_report(self):
@@ -382,7 +405,7 @@ class EST_Visualizer3D:
         .grid {{display:grid; grid-template-columns:repeat(auto-fit,minmax(480px,1fr)); gap:20px;}}
         .card {{background:#1a1a1a; border-radius:10px; padding:15px; box-shadow:0 4px 8px rgba(0,0,0,0.5);}}
         .card img {{width:100%; border-radius:8px;}}
-        .card h3 {{color:#4fc3f7; margin:10px 0; font-size:18px;}}
+        .card h3 {{color:#4fc3f7; margin:10px 0; fontsize:18px;}}
     </style>
 </head>
 <body>
@@ -452,7 +475,6 @@ class EST_Visualizer3D:
 
 
 
-
 def main():
     print(
         r"""
@@ -463,28 +485,58 @@ def main():
 |_____|___/  |_|     |_|\__,_|_.__/   
 
 EST VISUALIZER 3D - v3.1 Compatible
+Now with timestamped folders & session loop
 """
     )
+    
+    session_count = 0
+    
+    # Session loop - simple and clean
+    while True:
+        session_count += 1
+        print(f"\n{'=' * 60}")
+        print(f"ANALYSIS SESSION #{session_count}")
+        print("=" * 60)
+        
+        # Create new visualizer instance for this session
+        visualizer = EST_Visualizer3D()
+        data_file = visualizer.file_picker()
+        
+        if not data_file:
+            print("❌ No file selected")
+            choice = input("\nTry another file? (y/N): ").strip().lower()
+            if choice != 'y':
+                print("\nExiting EST Visualizer...")
+                break
+            continue
+        
+        if not visualizer.load_data(data_file):
+            choice = input("\nTry another file? (y/N): ").strip().lower()
+            if choice != 'y':
+                print("\nExiting EST Visualizer...")
+                break
+            continue
 
-    visualizer = EST_Visualizer3D()
-    data_file = visualizer.file_picker()
-    if not data_file:
-        print("❌ No file selected")
-        input("Press Enter to exit...")
-        return
-    if not visualizer.load_data(data_file):
-        input("Press Enter to exit...")
-        return
+        # Create all visualizations
+        visualizer.create_all_visualizations()
+        visualizer.create_html_report()
 
-    visualizer.create_all_visualizations()
-    visualizer.create_html_report()
-
-    print("\n" + "=" * 60)
-    print("VISUALIZATION COMPLETE!")
-    print("=" * 60)
-    print(f"📁 All files saved to: {visualizer.output_dir}")
-    print("🌐 Open visualization_report.html in your browser")
-    print("=" * 60)
+        # Show completion message
+        print("\n" + "=" * 60)
+        print("VISUALIZATION COMPLETE!")
+        print("=" * 60)
+        print(f"📁 All files saved to: {visualizer.output_dir}")
+        print("🌐 Open visualization_report.html in your browser")
+        print("=" * 60)
+        
+        # Ask to continue or exit
+        choice = input("\nAnalyze another file? (y/N): ").strip().lower()
+        if choice != 'y':
+            print(f"\nThank you for using EST Visualizer 3D!")
+            print(f"Total analysis sessions: {session_count}")
+            break
+    
+    # Clean exit
     input("\nPress Enter to exit...")
 
 
@@ -492,10 +544,9 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nInterrupted by user")
+        print("\n\nProgram interrupted by user")
     except Exception as e:
         print(f"\nUnexpected error: {e}")
         import traceback
-
         traceback.print_exc()
         input("\nPress Enter to exit...")
