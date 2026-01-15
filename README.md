@@ -46,7 +46,8 @@ The primary goal is to surface a potentially useful idea — not to close it.
 *   **[Paper II: Computational Emergence](https://doi.org/10.5281/zenodo.17769476):** 3D simulations demonstrating the spontaneous generation of the Cosmic Web and Baryon Asymmetry.
 *   **[Paper III: Computational Synthesis](https://doi.org/10.5281/zenodo.17798980):** Unifying gravity, thermodynamics, and causal structure.
 *   **[Paper IV: Statistical Homology](https://zenodo.org/records/17877635):** Analysis of the simulated Matter Power Spectrum ($n_s \approx -3.03$).
-*   **[Paper IX: The Programmatic Bridge](https://doi.org/10.5281/zenodo.18219699):** Defines the boundary between the classical (variational) and quantum (unitary) regimes of the Cost Function. Establishes the research program for 2026. **(New - Jan 12)**
+*   **[Paper V: Empirical Evidence of Vacuum Stability](https://doi.org/10.5281/zenodo.18255175):** Reports a statistically significant ($7.83\sigma$) anomaly in CMS Open Data. High information density correlates with reduced vacuum volatility ("Excess Rigidity"), supporting the EST prediction of Topological Locking. **(New - Jan 15)**
+*   **[Paper IX: The Programmatic Bridge](https://doi.org/10.5281/zenodo.18219699):** Defines the boundary between the classical (variational) and quantum (unitary) regimes of the Cost Function. Establishes the research program for 2026.
 
 ---
 
