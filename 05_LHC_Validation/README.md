@@ -8,7 +8,7 @@ This directory contains the extraction and analysis scripts used to identify the
 We observed that as local vacuum energy density ($\rho$) increases, the volatility of the vacuum (MET resolution) **decreases** by 5.59%, exceeding standard stochastic predictions.
 
 ![Bootstrap Verification](full_scale_bootstrap.png)
-*Figure 1: The observed stability gain ($$Red Line$$) lies $$7.83\sigma$$ outside the null distribution.*
+*Figure 1: The observed stability gain (**Red Line**) lies 7.83σ outside the null distribution.*
 
 ## 🛠️ Reproduction Steps
 
@@ -29,4 +29,5 @@ pip install requirements.txt
 
 # Run the Lab
 EST_LHC_Research_Lab.py
+
 
