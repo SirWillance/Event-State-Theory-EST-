@@ -1,0 +1,85 @@
+=== FULL SCALE VERIFICATION: nano_data2016_1-9.root ===
+Log file: FullScale_Verification_20251207_200638.log
+Analysis started: 2025-12-07 20:06:38
+
+1. Loading ALL events...
+   (This may take a moment depending on file size)
+   Raw events loaded: 37,689
+   Data load time: 0.04s
+   Valid events after filtering: 35,057
+   Filter time: 0.00s
+   Total load & filter time: 0.64s
+
+   Dataset Statistics:
+     Rho: Mean=4.01, Std=1.60
+     MET: Mean=388.32, Std=154.42
+     Ratio: Mean=97.96, Std=14.93
+
+2. Defining Population Groups
+   Threshold Calculation:
+     Average Rho: 4.0054
+     Standard Deviation: 1.5988
+     Threshold (2.5 sigma): > 8.0025 GeV
+
+   Population Analysis:
+     Normal Frames: 34,476 (98.3%)
+     High-Res Frames: 581 (1.7%)
+     Avg Rho (Normal): 3.92
+     Avg Rho (High-Res): 8.93
+
+3. Observed Stability Analysis
+   Normal Group:
+     Mean Ratio: 98.07
+     Std Ratio: 14.99
+     Volatility (CV): 15.2817%
+
+   High-Resistance Group:
+     Mean Ratio: 91.62
+     Std Ratio: 9.09
+     Volatility (CV): 9.9225%
+
+   Stability Comparison:
+     Volatility Difference: 5.3592%
+     Relative Change: -35.07%
+
+   >>> SIGNAL CONFIRMED: High load creates stability.
+   >>> Stability Gain: 5.3592%
+
+4. Bootstrapping Analysis
+   Starting bootstrap with 1000 iterations...
+     Progress: 200/1000 (20%) - ETA: 0.1s     Progress: 400/1000 (40%) - ETA: 0.1s     Progress: 600/1000 (60%) - ETA: 0.0s     Progress: 800/1000 (80%) - ETA: 0.0s   Bootstrap completed in 0.10s            
+
+   Bootstrap Statistics:
+     Mean simulated diff: 0.0855%
+     Std simulated diff: 0.6196%
+     Min simulated diff: -1.8110%
+     Max simulated diff: 1.7690%
+
+5. Statistical Significance
+   Observed Stability Gain: 5.3592%
+   95% Confidence Interval: [-1.1993%, 1.2669%]
+   P-Value: 0.000000
+   Statistical Assessment: EXTREMELY SIGNIFICANT
+   >>> EXTREMELY SIGNIFICANT (p < 0.001)
+   Z-score: 8.51
+
+6. Generating Visualizations...
+   Main plot saved as 'full_scale_bootstrap.png'
+   Summary plot saved as 'stability_summary.png'
+
+7. Analysis Complete
+   Total processing time: 2.28s
+   Files created:
+     - full_scale_bootstrap.png
+     - stability_summary.png
+     - FullScale_Verification_20251207_200638.log
+
+=== FINAL VERDICT ===
+Dataset Size: 35,057 events
+High-Resistance Events: 581 events (1.66%)
+Stability Gain: 5.3592%
+P-value: 0.000000
+Significance: EXTREMELY SIGNIFICANT
+Z-score: 8.51
+>>> CONCLUSION: EST HYPOTHESIS SUPPORTED
+>>> The system shows increased stability under high load

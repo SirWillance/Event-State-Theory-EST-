@@ -1,0 +1,42 @@
+=== PPS TIMING ANALYSIS: Alternative Timing Data ===
+File: nano_data2016_1-9.root
+Log file: PPS_Timing_Analysis_20251207_201426.log
+Analysis started: 2025-12-07 20:14:26
+
+1. Investigating PPS Timing Branches...
+   Testing PPS branches with small sample...
+   Sample size: 100 events
+
+   Analyzing PPS timing data structure...
+
+   PPS Timing Data Summary:
+     Events with valid PPS data: 0/100
+     Total valid PPS measurements: 0
+
+   WARNING: No valid PPS timing data found.
+   Trying alternative approach...
+   Loading larger sample (1000 events)...
+   Found 0 valid PPS times in 1000 events
+
+   CRITICAL: No valid PPS timing data available.
+   All PPS times appear to be placeholder values.
+
+   Alternative timing sources exhausted.
+   This dataset does not contain usable timing information.
+
+   SUGGESTIONS:
+     1. Use a different dataset with timing information
+     2. Contact data providers about timing availability
+     3. Focus on non-timing analyses (stability, correlations)
+
+=== ANALYSIS TERMINATED ===
+Reason: No valid timing data in dataset.
+
+Diagnostic Summary:
+  Proton_multiRP_time: All values = -999 (placeholder)
+  PPSLocalTrack_time: No valid values found
+  Recommendation: Use different dataset for timing analysis
+
+Total processing time: 0.65s
+
+Diagnostic plot saved as 'timing_data_unavailable.png'

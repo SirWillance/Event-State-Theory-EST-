@@ -1,0 +1,99 @@
+=== TIMING ANALYSIS: Moment of Truth ===
+File: nano_data2016_1-9.root
+Log file: Timing_Analysis_20251207_201344.log
+Analysis started: 2025-12-07 20:13:44
+
+1. Investigating available branches...
+   Available branches (partial list):
+      1. run
+      2. luminosityBlock
+      3. event
+      4. nboostedTau
+      5. boostedTau_chargedIso
+      6. boostedTau_eta
+      7. boostedTau_leadTkDeltaEta
+      8. boostedTau_leadTkDeltaPhi
+      9. boostedTau_leadTkPtOverTauPt
+     10. boostedTau_mass
+     11. boostedTau_neutralIso
+     12. boostedTau_phi
+     13. boostedTau_photonsOutsideSignalCone
+     14. boostedTau_pt
+     15. boostedTau_puCorr
+     16. boostedTau_rawAntiEle2018
+     17. boostedTau_rawIso
+     18. boostedTau_rawIsodR03
+     19. boostedTau_rawMVAnewDM2017v2
+     20. boostedTau_rawMVAoldDM2017v2
+
+   Looking for timing-related branches...
+   Found timing-related branches:
+     - nProton_multiRP
+     - Proton_multiRP_t
+     - Proton_multiRP_thetaX
+     - Proton_multiRP_thetaY
+     - Proton_multiRP_time
+     - Proton_multiRP_timeUnc
+     - Proton_multiRP_xi
+     - Proton_multiRP_arm
+     - Muon_inTimeMuon
+     - PPSLocalTrack_time
+     - PPSLocalTrack_timeUnc
+     - PPSLocalTrack_multiRPProtonIdx
+     - PPSLocalTrack_singleRPProtonIdx
+     - PPSLocalTrack_decRPId
+     - PPSLocalTrack_rpType
+     - nProton_singleRP
+     - Proton_singleRP_thetaY
+     - Proton_singleRP_xi
+     - Proton_singleRP_decRPId
+
+2. Loading data...
+   Examining 'Proton_multiRP_time' branch structure...
+   Sample size: 100 events
+     Event 0: 0 protons, valid times: 0
+     Event 1: 0 protons, valid times: 0
+     Event 2: 0 protons, valid times: 0
+     Event 3: 0 protons, valid times: 0
+     Event 4: 0 protons, valid times: 0
+
+   Timing Data Summary (first 100 events):
+     Total protons recorded: 0
+     Valid proton times (t > -900): 0
+     Invalid timing entries (-999): 0
+     Percentage valid: 0.0%
+
+   CRITICAL: No valid timing data found in sample!
+   All proton times appear to be placeholder values (-999).
+   Timing analysis cannot proceed with this dataset.
+
+   Possible reasons:
+     1. Timing information was not recorded in this dataset
+     2. The timing branch contains only placeholder values
+     3. A different branch name contains timing data
+
+   Alternative timing search...
+     Found alternative: 'luminosityBlock' with 10 real values
+     Found alternative: 'event' with 10 real values
+     Found alternative: 'nboostedTau' with 10 real values
+     Found alternative: 'CaloMET_phi' with 10 real values
+     Found alternative: 'CaloMET_pt' with 10 real values
+     Found alternative: 'CaloMET_sumEt' with 10 real values
+     Found alternative: 'ChsMET_phi' with 10 real values
+     Found alternative: 'ChsMET_pt' with 10 real values
+     Found alternative: 'ChsMET_sumEt' with 10 real values
+     Found alternative: 'nCorrT1METJet' with 10 real values
+     Found alternative: 'CorrT1METJet_area' with 23 real values
+     Found alternative: 'CorrT1METJet_eta' with 23 real values
+     Found alternative: 'CorrT1METJet_muonSubtrFactor' with 23 real values
+     Found alternative: 'CorrT1METJet_phi' with 23 real values
+     Found alternative: 'CorrT1METJet_rawPt' with 23 real values
+     Found alternative: 'PFCands_eta' with 9130 real values
+
+   SUGGESTION: Check the dataset documentation or contact
+   the data provider for timing information availability.
+
+   Diagnostic plot saved as 'timing_diagnostic.png'
+
+=== ANALYSIS TERMINATED ===
+Reason: No valid timing data available in dataset.

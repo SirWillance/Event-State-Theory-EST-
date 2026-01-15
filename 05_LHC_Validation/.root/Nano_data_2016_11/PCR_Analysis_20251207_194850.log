@@ -1,0 +1,52 @@
+=== Deep Analysis: nano_data2016_11.root ===
+Log file: PCR_Analysis_20251207_194850.log
+Analysis started: 2025-12-07 19:48:50
+
+1. Loading data branches...
+   Loaded 10,000 events.
+
+2. Vacuum Energy Statistics
+   Average Background Energy Density (Rho): 5.8525
+   Standard Deviation: 2.5665
+   Anomaly Threshold (3 Sigma): 13.5520
+   Number of Anomalous Vacuum Events: 25
+   Percentage of Total Events: 0.25%
+   Max Anomaly Value: 18.5539
+   Min Anomaly Value: 13.6273
+   Mean Anomaly Value: 14.4768
+
+3. Correlation Analysis
+   Correlation between Vacuum Density and Missing Energy: 0.9601
+   >>> Strong correlation detected
+
+4. Ratio Analysis (MET/Rho)
+C:\Users\Zeratha\PCR_Hunt\analyze_pcr.py:121: RuntimeWarning: divide by zero encountered in divide
+  ratios = met / rho
+C:\Users\Zeratha\PCR_Hunt\venv\lib\site-packages\numpy\_core\_methods.py:191: RuntimeWarning: invalid value encountered in subtract
+  x = asanyarray(arr - arrmean)
+   Average MET/Rho Ratio: inf
+   Ratio Standard Deviation: nan
+   Coefficient of Variation: nan%
+
+5. Summary Statistics
+   Rho Statistics:
+     Min: 0.0000, Max: 18.5539
+     25th Percentile: 4.5164
+     Median: 5.8776
+     75th Percentile: 7.4360
+
+   MET Statistics:
+     Min: 19.31, Max: 1624.00
+     Mean: 589.58, Std: 249.24
+
+6. Generating Visualization...
+   Plot saved as 'vacuum_analysis.png'
+   Generating histogram...
+   Histogram saved as 'vacuum_distributions.png'
+
+7. Analysis Complete
+   Total processing time: N/A
+   Files created:
+     - vacuum_analysis.png
+     - vacuum_distributions.png
+     - PCR_Analysis_20251207_194850.log

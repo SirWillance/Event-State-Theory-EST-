@@ -1,0 +1,36 @@
+--- STABILITY ANALYSIS: The Cost Function ---
+Log file: EST_Analysis_20251207_201851.log
+Analysis started: 2025-12-07 20:18:51
+
+Loading data...
+Loaded 10,000 events
+After filtering (rho > 0.1): 9,268 events
+
+--- THRESHOLD CALCULATION ---
+Average Rho: 3.57
+Std Dev Rho: 1.39
+High-Resistance Threshold: 7.04
+
+--- DATASET ---
+Normal Frames: 9110 (98.3%)
+High-Resistance Frames: 158 (1.7%)
+
+--- STABILITY CHECK (The 'J' Constant) ---
+Normal Ratio: 97.50 (Volatility: 16.24%)
+High-Res Ratio: 92.71 (Volatility: 10.03%)
+----------------------------------------
+>>> RESULT: SUPPORT FOR EST. The system becomes MORE STABLE under load.
+Stability Improvement: 6.21%
+
+--- STATISTICAL SIGNIFICANCE ---
+T-statistic: 6.3021
+P-value: 0.000000
+Significance: SIGNIFICANT
+
+--- VISUALIZATION ---
+Generating plot...
+Plot saved as 'stability_test.png'
+
+--- ANALYSIS COMPLETE ---
+Log file saved as: EST_Analysis_20251207_201851.log
+is completed at: 2025-12-07 20:18:52
