@@ -70,7 +70,7 @@ Details may change as analysis continues.
 
 | Directory | Contents |
 | :--- | :--- |
-| **[`00_Foundations`](00_Foundations_and_Proposals)** | The conceptual origins, executive summary, and experimental proposals of the EST framework.
+| **[`00_Foundations_and_Proposals`](00_Foundations_and_Proposals)** | The conceptual origins, executive summary, and experimental proposals of the EST framework.
 | **[`01_Publications`](01_Publications)** | Phase I Papers (I-IV) and the Synthesis Draft. |
 | **[`02_Cosmology_Code`](02_Cosmology_Code)** | The **EST Cosmology Engine**. Generates the Cosmic Web. |
 | **[`03_Key_Evidence`](03_Key_Evidence)** | **[Preview]** Numerical solver demonstrating the Pre-Causal Resonance effect. |
