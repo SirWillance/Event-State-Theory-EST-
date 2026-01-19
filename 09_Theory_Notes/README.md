@@ -14,7 +14,7 @@ This directory contains the raw theoretical derivations, conceptual frameworks, 
     *   *Summary:* Explicit calculation of the "Lattice Tax" ($T_L$) arising from the difference between Manhattan and Euclidean distance on a cubic grid.
 *   **[`EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md`](./appendices/EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md)**
     *   *Summary:* Arguments for the infrared consistency of the emergent theory, invoking Lovelock's Theorem to constrain the effective action.
-*   **[`EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md`](./appendices/EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md)**
+*   **[`EST_VI_Appendix_D_Refined_Derivation_No_Fundamental_Time.md`](./appendices/EST_VI_Appendix_D_Refined_Derivation_No_Fundamental_Time.md)**
     *   *Summary:* Formal definitions of the Anisotropy Tensor and the Geometric Cost functional.
 
 ---
