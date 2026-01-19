@@ -19,17 +19,6 @@ This directory contains the raw theoretical derivations, conceptual frameworks, 
 
 ---
 
-## 🌌 Cosmological Frameworks (Phase II)
-*Conceptual notes defining the "Crystallizing Universe" model used in Papers II, IV, and V.*
-
-*   **[`Theory_Note_The_Crystallizing_Universe.md`](./Theory_Note_The_Crystallizing_Universe.md)**
-    *   *Concept:* Reinterprets the Big Bang not as an explosion, but as a phase transition (Asynchronous Multi-Point Crystallization). Explains the Hubble Tension via density-dependent time dilation in voids vs. filaments.
-*   **[`Theory_Note_Axiomatic_Genesis.md`](./Theory_Note_Axiomatic_Genesis.md)**
-    *   *Concept:* "Layer -1" Logic. Derives the necessity of existence from the infinite cost of maintaining a perfect void (Constraint Cost). The origin of the $\epsilon$ bias.
-*   **[`Theory_Note_Pre_Collision_Crystallization.md`](./Theory_Note_Pre_Collision_Crystallization.md)**
-    *   *Concept:* Defines Pre-Causal Resonance (PCR) as "Thermodynamic Anticipation" or vacuum rigidity forming prior to high-energy events.
-
----
 
 ## 🔗 The Grand Synthesis
 *   **[`EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.m`](./EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.m)** *(File name may vary based on your local save)*
