@@ -8,7 +8,7 @@ This directory contains the raw theoretical derivations, conceptual frameworks, 
 ## 📐 Supplements to Paper VI (General Relativity)
 *Technical appendices detailing the derivation of the Einstein Field Equations from discrete lattice optimization.*
 
-*   **[`Theory_Note_06_A_Discrete_to_Emergent_GR.md`](./Theory_Note_06_A_Discrete_to_Emergent_GR.md)**
+*   **[`EST_VI_Appendix_A_IR_Consistency_Emergent_GR.md`](./EST_VI_Appendix_A_IR_Consistency_Emergent_GR.md)**
     *   *Summary:* High-level roadmap of the derivation from discrete causal optimization to the Einstein-Hilbert action.
 *   **[`Theory_Note_06_B_Lattice_Anisotropy_Derivation.md`](./Theory_Note_06_B_Lattice_Anisotropy_Derivation.md)**
     *   *Summary:* Explicit calculation of the "Lattice Tax" ($T_L$) arising from the difference between Manhattan and Euclidean distance on a cubic grid.
