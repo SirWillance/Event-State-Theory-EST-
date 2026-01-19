@@ -32,7 +32,7 @@ This directory contains the raw theoretical derivations, conceptual frameworks, 
 ---
 
 ## 🔗 The Grand Synthesis
-*   **[`Unification_Draft.md`](./Unification_forreal.md)** *(File name may vary based on your local save)*
+*   **[`EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.m`](./EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.m)** *(File name may vary based on your local save)*
     *   *Concept:* The master logic connecting the "Lattice Tax" (Gravity) and "Topological Phase" (Quantum Mechanics) under the single banner of the Cost Function $J$.
 
 ---
