@@ -8,13 +8,13 @@ This directory contains the raw theoretical derivations, conceptual frameworks, 
 ## 📐 Supplements to Paper VI (General Relativity)
 *Technical appendices detailing the derivation of the Einstein Field Equations from discrete lattice optimization.*
 
-*   **[`EST_VI_Appendix_A_IR_Consistency_Emergent_GR.md`](./EST_VI_Appendix_A_IR_Consistency_Emergent_GR.md)**
+*   **[`EST_VI_Appendix_A_IR_Consistency_Emergent_GR.md`](./appendices/EST_VI_Appendix_A_IR_Consistency_Emergent_GR.md)**
     *   *Summary:* High-level roadmap of the derivation from discrete causal optimization to the Einstein-Hilbert action.
-*   **[`Theory_Note_06_B_Lattice_Anisotropy_Derivation.md`](./Theory_Note_06_B_Lattice_Anisotropy_Derivation.md)**
+*   **[`EST_VI_Appendix_B_Anisotropy_Cost_Definitions.md`](./appendices/EST_VI_Appendix_B_Anisotropy_Cost_Definitions.md)**
     *   *Summary:* Explicit calculation of the "Lattice Tax" ($T_L$) arising from the difference between Manhattan and Euclidean distance on a cubic grid.
-*   **[`Theory_Note_06_C_IR_Consistency.md`](./Theory_Note_06_C_IR_Consistency.md)**
+*   **[`EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md`](./appendices/EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md)**
     *   *Summary:* Arguments for the infrared consistency of the emergent theory, invoking Lovelock's Theorem to constrain the effective action.
-*   **[`Theory_Note_06_D_Definitions.md`](./Theory_Note_06_D_Definitions.md)**
+*   **[`EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md`](./appendices/EST_VI_Appendix_C_Toy_Model_Cubic_Lattice.md)**
     *   *Summary:* Formal definitions of the Anisotropy Tensor and the Geometric Cost functional.
 
 ---
