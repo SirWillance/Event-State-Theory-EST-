@@ -39,34 +39,26 @@ The primary goal is to surface a potentially useful idea — not to close it.
 
 ---
 
-## 🗺️ Current Publications
-*Available now on Zenodo and GitHub.*
+## 🗺️ The Event-State Research Program
+*All manuscripts are open-access and archived on Zenodo.*
 
-*   **[Paper IX: The Programmatic Bridge](https://doi.org/10.5281/zenodo.18219699):** Defines the boundary between the classical (variational) and quantum (unitary) regimes of the Cost Function.
-*   **[Paper I: Theoretical Framework](https://doi.org/10.5281/zenodo.17698703):** Defines the axioms, the Cost Function $J$, and the emergence of time.
+### 🌉 The Framework
+*   **[Paper IX: The Programmatic Bridge](https://doi.org/10.5281/zenodo.18219699):** Defines the boundary between the classical (variational) and quantum (unitary) regimes of the Cost Function. **Start Here.**
+*   **[Paper I: Theoretical Framework](https://doi.org/10.5281/zenodo.17698703):** The axioms of Discrete Causal Frames, the Cost Function ($J$), and the emergence of time.
+
+### 🌌 Cosmology (Phase I)
 *   **[Paper II: Computational Emergence](https://doi.org/10.5281/zenodo.17769476):** 3D simulations demonstrating the spontaneous generation of the Cosmic Web.
 *   **[Paper III: Computational Synthesis](https://doi.org/10.5281/zenodo.17798980):** Unifying gravity, thermodynamics, and causal structure.
-*   **[Paper IV: Statistical Homology](https://zenodo.org/records/17877635):** Analysis of the simulated Matter Power Spectrum ($n_s \approx -3.03$).
+*   **[Paper IV: Statistical Homology](https://doi.org/10.5281/zenodo.17877635):** Analysis of the simulated Matter Power Spectrum ($n_s \approx -3.03$).
+
+### ⚛️ Mechanics & Predictions (Phase II)
 *   **[Paper V: Empirical Evidence of Vacuum Stability](https://doi.org/10.5281/zenodo.18255175):** Reports a statistically significant ($7.83\sigma$) anomaly in CMS Open Data supporting Topological Locking.
-*   **[Paper VI: Emergence of General Relativity](https://doi.org/10.5281/zenodo.18298524):** Derivation of the Einstein Field Equations as the infrared effective theory of discrete causal optimization. **(New - Jan 19)**
-*   **[Paper VII: Quantum Mechanics as Statistical Limit](https://doi.org/10.5281/zenodo.18298680):** Derivation of the Schrödinger Equation from topological constraints on a discrete lattice. **(New - Jan 19)**
+*   **[Paper VI: Emergence of General Relativity](https://doi.org/10.5281/zenodo.18298524):** Derivation of Einstein's Equations from the minimization of Lattice Anisotropy ($T_L$).
+*   **[Paper VII: Emergence of Quantum Mechanics](https://doi.org/10.5281/zenodo.18298680):** Derivation of the Schrödinger Equation from probabilistic causal selection.
+*   **[Paper VIII: Mathematical Derivation of PCR](https://doi.org/10.5281/zenodo.18336221):** The formal prediction of Pre-Causal Resonance (Exponential Ramp) in vacuum fluctuations. **(New - Jan 22)**
 
 ---
 
-## 📅 Ongoing and Forthcoming Work (Phase II)
-
-Several follow-up papers are in preparation. These are **not yet published** and are listed here for transparency, not as claims of completion.
-
-Planned topics include:
-
-- empirical analysis of high-density vacuum behavior in collider data,
-- interpretation of gravitational dynamics in discrete optimization models,
-- probabilistic selection and its relation to quantum formalisms,
-- mathematical structure of global constraint satisfaction (“pre-causal” effects).
-
-Details may change as analysis continues.
-
----
 
 ## 📂 Repository Structure
 
